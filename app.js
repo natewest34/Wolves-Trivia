@@ -77,19 +77,32 @@ function hasPlayedToday(name) {
   return !!(state.scoresRecord[state.today] && state.scoresRecord[state.today][name]);
 }
 
-// Returns the winning player's name once everyone in state.players has submitted
-// a score for today, otherwise null. Ties break on faster completion time.
-function getTodayWinner() {
-  const today = state.scoresRecord[state.today] || {};
-  if (!state.players.length || !state.players.every((p) => today[p])) return null;
-
-  const sorted = Object.entries(today).sort((a, b) => {
+// Returns the winning player's name for a given day's score object, once everyone
+// in state.players has an entry for that day — otherwise null. Ties break on faster time.
+function dayWinner(dayScores) {
+  if (!state.players.length || !state.players.every((p) => dayScores[p])) return null;
+  const sorted = Object.entries(dayScores).sort((a, b) => {
     if (b[1].score !== a[1].score) return b[1].score - a[1].score;
     const aTime = a[1].timeSeconds ?? Infinity;
     const bTime = b[1].timeSeconds ?? Infinity;
     return aTime - bTime;
   });
   return sorted[0][0];
+}
+
+function getTodayWinner() {
+  return dayWinner(state.scoresRecord[state.today] || {});
+}
+
+// player -> number of days won, within the given date filter
+function countWins(dateFilterFn) {
+  const wins = {};
+  dateEntries(state.scoresRecord).forEach(([date, dayScores]) => {
+    if (!dateFilterFn(date)) return;
+    const winner = dayWinner(dayScores);
+    if (winner) wins[winner] = (wins[winner] || 0) + 1;
+  });
+  return wins;
 }
 
 function renderPlayerGrid() {
@@ -306,15 +319,21 @@ document.getElementById("back-to-players-btn").addEventListener("click", () => {
 });
 
 function aggregate(dateFilterFn) {
-  // player -> { totalScore, totalQuestions, games }
+  // player -> { totalScore, totalQuestions, games, totalTime, timedGames }
   const agg = {};
   dateEntries(state.scoresRecord).forEach(([date, dayScores]) => {
     if (!dateFilterFn(date)) return;
     Object.entries(dayScores).forEach(([player, entry]) => {
-      if (!agg[player]) agg[player] = { totalScore: 0, totalQuestions: 0, games: 0 };
+      if (!agg[player]) {
+        agg[player] = { totalScore: 0, totalQuestions: 0, games: 0, totalTime: 0, timedGames: 0 };
+      }
       agg[player].totalScore += entry.score;
       agg[player].totalQuestions += entry.total;
       agg[player].games += 1;
+      if (typeof entry.timeSeconds === "number") {
+        agg[player].totalTime += entry.timeSeconds;
+        agg[player].timedGames += 1;
+      }
     });
   });
   return agg;
@@ -368,15 +387,23 @@ function renderDailyLeaderboard(body) {
       const isMe = name === state.currentPlayer;
       const isWinner = name === winnerName;
       const detailRows = (entry.answers || [])
-        .map(
-          (a) => `
+        .map((a) => {
+          if (!a.question) {
+            // Entry saved before per-question detail was tracked — nothing to show.
+            return `
+            <div class="answer-detail-row">
+              <span class="mark ${a.correct ? "correct" : "wrong"}">${a.correct ? "✓" : "✗"}</span>
+              <span class="qtext">${a.category || "Question"} <span class="given">(played before answer detail was saved)</span></span>
+            </div>`;
+          }
+          return `
           <div class="answer-detail-row">
             <span class="mark ${a.correct ? "correct" : "wrong"}">${a.correct ? "✓" : "✗"}</span>
             <span class="qtext">${a.question}
               ${a.correct ? "" : `<span class="given">Answered: ${a.chosenAnswer} · Correct: ${a.correctAnswer}</span>`}
             </span>
-          </div>`
-        )
+          </div>`;
+        })
         .join("");
 
       return `
@@ -421,21 +448,33 @@ function renderLeaderboard(tab) {
     const filter =
       tab === "alltime" ? () => true : (date) => monthKeyOf(date) === monthKeyOf(state.today);
     const agg = aggregate(filter);
+    const wins = countWins(filter);
+
     const rows = Object.entries(agg)
       .map(([name, a]) => ({
         name,
-        totalScore: a.totalScore,
-        totalQuestions: a.totalQuestions,
         games: a.games,
-        avg: a.totalQuestions ? Math.round((a.totalScore / a.totalQuestions) * 100) : 0,
+        avgScore: a.games ? a.totalScore / a.games : 0,
+        avgTotal: a.games ? a.totalQuestions / a.games : 0,
+        avgTime: a.timedGames ? Math.round(a.totalTime / a.timedGames) : null,
+        wins: wins[name] || 0,
       }))
-      .sort((a, b) => b.totalScore - a.totalScore);
-    body.innerHTML = renderTable(rows, [
-      { label: "Player", render: (r) => r.name },
-      { label: "Games", render: (r) => r.games },
-      { label: "Avg", render: (r) => `${r.avg}%` },
-      { label: "Total", numeric: true, render: (r) => r.totalScore },
-    ]);
+      .sort((a, b) => b.avgScore - a.avgScore || b.wins - a.wins);
+
+    const seasonHeading =
+      tab === "monthly"
+        ? `<p class="season-label">Season: ${new Date(state.today + "T00:00:00").toLocaleDateString(undefined, { month: "long", year: "numeric" })}</p>`
+        : "";
+
+    body.innerHTML =
+      seasonHeading +
+      renderTable(rows, [
+        { label: "Player", render: (r) => r.name },
+        { label: "Games", render: (r) => r.games },
+        { label: "Avg Score", numeric: true, render: (r) => `${r.avgScore.toFixed(1)}/${r.avgTotal.toFixed(0)}` },
+        { label: "Avg Time", render: (r) => formatTime(r.avgTime) },
+        { label: "Daily Wins", numeric: true, render: (r) => `${r.wins} 🏆` },
+      ]);
     return;
   }
 
@@ -473,7 +512,7 @@ function renderLeaderboard(tab) {
 
     const rowsHtml = rows
       .map(
-        (r) => `<tr><td>${r.category}</td><td>${r.leader.name}</td><td class="score">${r.leader.correct}/${r.leader.total}</td></tr>`
+        (r) => `<tr><td>${r.category}</td><td>${r.leader.name}</td><td class="score">${Math.round(r.leader.acc * 100)}%</td></tr>`
       )
       .join("");
     body.innerHTML = `<table class="lb-table"><thead><tr><th>Category</th><th>Leader</th><th>Record</th></tr></thead><tbody>${rowsHtml}</tbody></table>`;

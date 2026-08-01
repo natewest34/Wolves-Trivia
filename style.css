@@ -99,6 +99,27 @@ main#app {
   font-size: 0.98rem;
 }
 
+.est-badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--amber-dim);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 10px;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
+.season-label {
+  font-family: var(--font-mono);
+  color: var(--amber);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: -8px 0 18px;
+}
+
 /* ---------- Player select ---------- */
 
 .player-grid {

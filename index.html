@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Trivia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <span class="brand">DAILY&nbsp;TRIVIA</span>
+    <span class="brand-date" id="today-date"></span>
+  </div>
+</header>
+
+<main id="app">
+
+  <!-- SCREEN: Player Select -->
+  <section id="screen-players" class="screen">
+    <h1 class="screen-title">Who's playing?</h1>
+    <p class="screen-sub">Pick your name to see today's board.</p>
+    <div id="player-grid" class="player-grid"></div>
+    <button id="add-player-btn" class="link-btn">+ Add a player</button>
+  </section>
+
+  <!-- SCREEN: Today's Lineup -->
+  <section id="screen-lineup" class="screen hidden">
+    <h1 class="screen-title">Today's Lineup</h1>
+    <p class="screen-sub" id="lineup-player-label"></p>
+    <div id="lineup-ticker" class="lineup-ticker"></div>
+    <button id="start-quiz-btn" class="primary-btn">Start &rarr;</button>
+  </section>
+
+  <!-- SCREEN: Quiz -->
+  <section id="screen-quiz" class="screen hidden">
+    <div class="quiz-header">
+      <div id="quiz-progress" class="quiz-progress"></div>
+      <div id="quiz-category" class="quiz-category"></div>
+    </div>
+    <h2 id="quiz-question" class="quiz-question"></h2>
+    <div id="quiz-choices" class="quiz-choices"></div>
+  </section>
+
+  <!-- SCREEN: Leaderboard -->
+  <section id="screen-leaderboard" class="screen hidden">
+    <h1 class="screen-title">Scoreboard</h1>
+    <p class="screen-sub" id="leaderboard-player-label"></p>
+
+    <div class="tabs" id="leaderboard-tabs">
+      <button class="tab-btn active" data-tab="daily">Today</button>
+      <button class="tab-btn" data-tab="alltime">All-Time</button>
+      <button class="tab-btn" data-tab="monthly">This Month</button>
+      <button class="tab-btn" data-tab="categories">Categories</button>
+    </div>
+
+    <div id="leaderboard-body" class="leaderboard-body"></div>
+
+    <button id="back-to-players-btn" class="link-btn">&larr; Switch player</button>
+  </section>
+
+</main>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="config.js"></script>
+<script src="jsonbin.js"></script>
+<script src="opentdb.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

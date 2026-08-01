@@ -31,10 +31,17 @@ function shuffle(arr) {
   return a;
 }
 
-async function fetchBatch(amount, difficulty, token) {
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// OpenTDB allows only 1 request per 5 seconds per IP (response_code 5 if you go over),
+// so this must never be called concurrently with itself — always await one call before
+// starting the next (see fetchDailyQuestions, which serializes calls with a gap).
+async function fetchBatch(amount, difficulty, token, attempt = 0) {
   const url = new URL("https://opentdb.com/api.php");
   url.searchParams.set("amount", amount);
-  url.searchParams.set("difficulty", difficulty);
+  if (difficulty) url.searchParams.set("difficulty", difficulty);
   url.searchParams.set("type", "multiple");
   url.searchParams.set("encode", "url3986");
   if (token) url.searchParams.set("token", token);
@@ -42,12 +49,22 @@ async function fetchBatch(amount, difficulty, token) {
   const res = await fetch(url);
   const data = await res.json();
 
-  // response_code 4 = token exhausted all questions for this filter; reset and retry once.
-  if (data.response_code === 4 && token) {
-    await fetch(`https://opentdb.com/api_token.php?command=reset&token=${token}`);
-    const retry = await fetch(url);
-    return (await retry.json()).results || [];
+  // response_code 5 = rate limited; back off and retry.
+  if (data.response_code === 5 && attempt < 3) {
+    await sleep(5500);
+    return fetchBatch(amount, difficulty, token, attempt + 1);
   }
+
+  // response_code 4 = token has already served every question matching this filter; reset and retry once.
+  if (data.response_code === 4 && token) {
+    await sleep(5500);
+    await fetch(`https://opentdb.com/api_token.php?command=reset&token=${token}`);
+    await sleep(5500);
+    return fetchBatch(amount, difficulty, token, attempt + 1);
+  }
+
+  // response_code 1 = not enough questions exist for this filter combo — just return what we got (may be empty);
+  // fetchDailyQuestions tops up any shortfall afterward.
   return data.results || [];
 }
 
@@ -68,16 +85,32 @@ function normalizeQuestion(raw) {
 
 // Pulls today's 10 questions: 3 easy / 4 medium / 3 hard (see CONFIG.DIFFICULTY_MIX),
 // each difficulty batch pulled from a random mix of categories.
+// IMPORTANT: these calls are made one at a time with a delay between them — OpenTDB
+// rate-limits to 1 request/5s per IP, and firing them concurrently silently drops results.
 async function fetchDailyQuestions() {
   const token = await getSessionToken();
-  const mix = CONFIG.DIFFICULTY_MIX;
+  const mix = Object.entries(CONFIG.DIFFICULTY_MIX).filter(([, amount]) => amount > 0);
 
-  const batches = await Promise.all(
-    Object.entries(mix).map(([difficulty, amount]) =>
-      amount > 0 ? fetchBatch(amount, difficulty, token) : Promise.resolve([])
-    )
-  );
+  const results = [];
+  for (let i = 0; i < mix.length; i++) {
+    const [difficulty, amount] = mix[i];
+    if (i > 0) await sleep(5500);
+    const batch = await fetchBatch(amount, difficulty, token);
+    results.push(...batch);
+  }
 
-  const all = batches.flat().map(normalizeQuestion);
+  const targetTotal = Object.values(CONFIG.DIFFICULTY_MIX).reduce((a, b) => a + b, 0);
+  let shortfall = targetTotal - results.length;
+
+  // Top up with an unfiltered pull if any difficulty came up short (small pool / rate-limit edge cases).
+  while (shortfall > 0) {
+    await sleep(5500);
+    const topUp = await fetchBatch(shortfall, null, token);
+    if (!topUp.length) break; // avoid an infinite loop if OpenTDB truly has nothing left
+    results.push(...topUp);
+    shortfall = targetTotal - results.length;
+  }
+
+  const all = results.map(normalizeQuestion);
   return shuffle(all);
 }

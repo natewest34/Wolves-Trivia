@@ -9,7 +9,9 @@ const state = {
   questions: [],         // today's 10 questions
   scoresRecord: {},      // full scores bin (all dates)
   quizIndex: 0,
-  quizAnswers: [],        // {category, difficulty, correct}
+  quizAnswers: [],        // {category, difficulty, correct, question, chosenAnswer, correctAnswer}
+  quizStartTime: null,
+  timerInterval: null,
 };
 
 function todayKey() {
@@ -20,6 +22,15 @@ function todayKey() {
 
 function monthKeyOf(dateStr) {
   return dateStr.slice(0, 7); // "YYYY-MM"
+}
+
+const DATE_KEY_RE = /^\d{4}-\d{2}-\d{2}$/;
+
+// Only ever iterate real "YYYY-MM-DD" entries in the scores record — bins are seeded
+// with a placeholder key (e.g. "_init") to satisfy JSONBin's "can't be empty" check,
+// and that placeholder must never be treated as a day of scores.
+function dateEntries(scoresRecord) {
+  return Object.entries(scoresRecord).filter(([key]) => DATE_KEY_RE.test(key));
 }
 
 function showToast(msg) {
@@ -66,13 +77,31 @@ function hasPlayedToday(name) {
   return !!(state.scoresRecord[state.today] && state.scoresRecord[state.today][name]);
 }
 
+// Returns the winning player's name once everyone in state.players has submitted
+// a score for today, otherwise null. Ties break on faster completion time.
+function getTodayWinner() {
+  const today = state.scoresRecord[state.today] || {};
+  if (!state.players.length || !state.players.every((p) => today[p])) return null;
+
+  const sorted = Object.entries(today).sort((a, b) => {
+    if (b[1].score !== a[1].score) return b[1].score - a[1].score;
+    const aTime = a[1].timeSeconds ?? Infinity;
+    const bTime = b[1].timeSeconds ?? Infinity;
+    return aTime - bTime;
+  });
+  return sorted[0][0];
+}
+
 function renderPlayerGrid() {
   const grid = document.getElementById("player-grid");
   grid.innerHTML = "";
+  const winner = getTodayWinner();
   state.players.forEach((name) => {
     const btn = document.createElement("button");
     btn.className = "player-card";
-    btn.innerHTML = `${name}${hasPlayedToday(name) ? '<span class="played-badge">&#10003;</span>' : ""}`;
+    const badge = hasPlayedToday(name) ? '<span class="played-badge">&#10003;</span>' : "";
+    const trophy = name === winner ? '<span class="trophy" title="Today\'s winner">🏆</span>' : "";
+    btn.innerHTML = `${name}${trophy}${badge}`;
     btn.addEventListener("click", () => selectPlayer(name));
     grid.appendChild(btn);
   });
@@ -160,11 +189,30 @@ document.getElementById("start-quiz-btn").addEventListener("click", () => {
   state.quizAnswers = [];
   showScreen("screen-quiz");
   renderQuizQuestion();
+  startTimer();
 });
 
 // ============================================
 // Quiz screen
 // ============================================
+
+function startTimer() {
+  state.quizStartTime = Date.now();
+  updateTimerDisplay();
+  state.timerInterval = setInterval(updateTimerDisplay, 1000);
+}
+
+function stopTimer() {
+  clearInterval(state.timerInterval);
+  return Math.round((Date.now() - state.quizStartTime) / 1000);
+}
+
+function updateTimerDisplay() {
+  const elapsed = Math.floor((Date.now() - state.quizStartTime) / 1000);
+  const mins = Math.floor(elapsed / 60);
+  const secs = elapsed % 60;
+  document.getElementById("quiz-timer").textContent = `${mins}:${String(secs).padStart(2, "0")}`;
+}
 
 function renderQuizQuestion() {
   const q = state.questions[state.quizIndex];
@@ -192,8 +240,16 @@ function handleAnswer(choice, btnEl) {
     if (b.textContent === q.correctAnswer) b.classList.add("correct");
     else if (b === btnEl) b.classList.add("wrong");
   });
+  btnEl.blur(); // some browsers keep a focus ring lit after a mouse click; drop it explicitly
 
-  state.quizAnswers.push({ category: q.category, difficulty: q.difficulty, correct: isCorrect });
+  state.quizAnswers.push({
+    category: q.category,
+    difficulty: q.difficulty,
+    correct: isCorrect,
+    question: q.question,
+    chosenAnswer: choice,
+    correctAnswer: q.correctAnswer,
+  });
 
   setTimeout(() => {
     state.quizIndex += 1;
@@ -206,11 +262,13 @@ function handleAnswer(choice, btnEl) {
 }
 
 async function finishQuiz() {
+  const timeSeconds = stopTimer();
   const score = state.quizAnswers.filter((a) => a.correct).length;
   const entry = {
     score,
     total: state.quizAnswers.length,
     answers: state.quizAnswers,
+    timeSeconds,
     submittedAt: new Date().toISOString(),
   };
 
@@ -250,7 +308,7 @@ document.getElementById("back-to-players-btn").addEventListener("click", () => {
 function aggregate(dateFilterFn) {
   // player -> { totalScore, totalQuestions, games }
   const agg = {};
-  Object.entries(state.scoresRecord).forEach(([date, dayScores]) => {
+  dateEntries(state.scoresRecord).forEach(([date, dayScores]) => {
     if (!dateFilterFn(date)) return;
     Object.entries(dayScores).forEach(([player, entry]) => {
       if (!agg[player]) agg[player] = { totalScore: 0, totalQuestions: 0, games: 0 };
@@ -279,18 +337,83 @@ function renderTable(rows, columns) {
   return `<table class="lb-table"><thead><tr><th></th>${head}</tr></thead><tbody>${body}</tbody></table>`;
 }
 
+function formatTime(seconds) {
+  if (seconds == null) return "—";
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${String(secs).padStart(2, "0")}`;
+}
+
+function renderDailyLeaderboard(body) {
+  const today = state.scoresRecord[state.today] || {};
+  const rows = Object.entries(today)
+    .map(([name, entry]) => ({ name, entry }))
+    // score desc, then time asc (faster wins ties) as the tiebreaker
+    .sort((a, b) => {
+      if (b.entry.score !== a.entry.score) return b.entry.score - a.entry.score;
+      const aTime = a.entry.timeSeconds ?? Infinity;
+      const bTime = b.entry.timeSeconds ?? Infinity;
+      return aTime - bTime;
+    });
+
+  if (!rows.length) {
+    body.innerHTML = `<p class="empty-state">No scores yet — check back after today's board fills up.</p>`;
+    return;
+  }
+
+  const winnerName = getTodayWinner();
+
+  const rowsHtml = rows
+    .map(({ name, entry }, i) => {
+      const isMe = name === state.currentPlayer;
+      const isWinner = name === winnerName;
+      const detailRows = (entry.answers || [])
+        .map(
+          (a) => `
+          <div class="answer-detail-row">
+            <span class="mark ${a.correct ? "correct" : "wrong"}">${a.correct ? "✓" : "✗"}</span>
+            <span class="qtext">${a.question}
+              ${a.correct ? "" : `<span class="given">Answered: ${a.chosenAnswer} · Correct: ${a.correctAnswer}</span>`}
+            </span>
+          </div>`
+        )
+        .join("");
+
+      return `
+        <tr class="lb-row-clickable ${isMe ? "me" : ""}" data-row="${i}">
+          <td class="lb-rank">${i + 1}</td>
+          <td><span class="lb-caret" data-caret="${i}">&#9656;</span>${name}${isWinner ? '<span class="trophy" title="Today\'s winner">🏆</span>' : ""}</td>
+          <td class="score">${entry.score}/${entry.total}</td>
+          <td class="score">${formatTime(entry.timeSeconds)}</td>
+        </tr>
+        <tr class="detail-row hidden" data-detail="${i}">
+          <td colspan="4"><div class="answer-detail">${detailRows}</div></td>
+        </tr>`;
+    })
+    .join("");
+
+  body.innerHTML = `
+    <table class="lb-table">
+      <thead><tr><th></th><th>Player</th><th>Score</th><th>Time</th></tr></thead>
+      <tbody>${rowsHtml}</tbody>
+    </table>`;
+
+  body.querySelectorAll("[data-row]").forEach((tr) => {
+    tr.addEventListener("click", () => {
+      const i = tr.dataset.row;
+      const detail = body.querySelector(`[data-detail="${i}"]`);
+      const caret = body.querySelector(`[data-caret="${i}"]`);
+      detail.classList.toggle("hidden");
+      caret.classList.toggle("open");
+    });
+  });
+}
+
 function renderLeaderboard(tab) {
   const body = document.getElementById("leaderboard-body");
 
   if (tab === "daily") {
-    const today = state.scoresRecord[state.today] || {};
-    const rows = Object.entries(today)
-      .map(([name, entry]) => ({ name, score: entry.score, total: entry.total }))
-      .sort((a, b) => b.score - a.score);
-    body.innerHTML = renderTable(rows, [
-      { label: "Player", render: (r) => r.name },
-      { label: "Score", numeric: true, render: (r) => `${r.score}/${r.total}` },
-    ]);
+    renderDailyLeaderboard(body);
     return;
   }
 
@@ -319,7 +442,7 @@ function renderLeaderboard(tab) {
   if (tab === "categories") {
     // category -> player -> {correct, total}
     const catMap = {};
-    Object.values(state.scoresRecord).forEach((dayScores) => {
+    dateEntries(state.scoresRecord).forEach(([, dayScores]) => {
       Object.entries(dayScores).forEach(([player, entry]) => {
         (entry.answers || []).forEach((a) => {
           if (!catMap[a.category]) catMap[a.category] = {};

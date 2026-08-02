@@ -14,5 +14,5 @@ const CONFIG = {
   PLAYERS_BIN_ID: "6a6e6ef0f5f4af5e29df5edf",
 
   // How many questions per day, split by difficulty.
-  DIFFICULTY_MIX: { easy: 3, medium: 4, hard: 3 },
+  DIFFICULTY_MIX: { easy: 4, medium: 4, hard: 2 },
 };

@@ -46,6 +46,16 @@ function showScreen(id) {
   document.getElementById(id).classList.remove("hidden");
 }
 
+// Input-modality tracking for focus rings: some browsers (Firefox in particular)
+// treat a mouse click on a <button> as deserving a visible focus ring, since keyboard
+// Enter/Space also technically "clicks" it and the browser can't fully tell the two
+// apart. Rather than rely on each browser's :focus-visible guess, track real input
+// directly — outline shows only when the last interaction was actually a keyboard Tab.
+document.addEventListener("mousedown", () => document.body.classList.add("using-mouse"));
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Tab") document.body.classList.remove("using-mouse");
+});
+
 // ============================================
 // Boot
 // ============================================
@@ -120,6 +130,10 @@ function renderPlayerGrid() {
     grid.appendChild(btn);
   });
 }
+
+document.getElementById("how-to-play-btn").addEventListener("click", () => {
+  document.getElementById("how-to-play-panel").classList.toggle("hidden");
+});
 
 document.getElementById("add-player-btn").addEventListener("click", async () => {
   const name = prompt("Add a player (first name is fine):");

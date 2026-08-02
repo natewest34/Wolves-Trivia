@@ -12,7 +12,7 @@ const state = {
   quizAnswers: [],        // {category, difficulty, correct, question, chosenAnswer, correctAnswer}
   quizStartTime: null,
   questionTimerInterval: null,
-  questionSecondsLeft: 10,
+  questionSecondsLeft: 20,
 };
 
 function todayKey() {
@@ -231,7 +231,7 @@ document.getElementById("start-quiz-btn").addEventListener("click", () => {
 // Quiz screen
 // ============================================
 
-const QUESTION_SECONDS = 10;
+const QUESTION_SECONDS = 20;
 
 // Overall run timer — deliberately NOT shown anywhere in the UI. It only exists
 // to record how long a player took, for tiebreaking on the daily leaderboard.

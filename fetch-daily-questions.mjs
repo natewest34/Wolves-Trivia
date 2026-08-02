@@ -10,7 +10,7 @@ const JSONBIN_API_KEY = process.env.JSONBIN_API_KEY;
 const QUESTIONS_BIN_ID = process.env.QUESTIONS_BIN_ID;
 
 // Keep in sync with config.js's DIFFICULTY_MIX on the client.
-const DIFFICULTY_MIX = { easy: 3, medium: 4, hard: 3 };
+const DIFFICULTY_MIX = { easy: 4, medium: 4, hard: 2 };
 
 // The timezone your players are actually in. This determines what "today" means —
 // it must match the local date the client computes in the browser (todayKey() in

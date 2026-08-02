@@ -11,7 +11,8 @@ const state = {
   quizIndex: 0,
   quizAnswers: [],        // {category, difficulty, correct, question, chosenAnswer, correctAnswer}
   quizStartTime: null,
-  timerInterval: null,
+  questionTimerInterval: null,
+  questionSecondsLeft: 10,
 };
 
 function todayKey() {
@@ -201,30 +202,50 @@ document.getElementById("start-quiz-btn").addEventListener("click", () => {
   state.quizIndex = 0;
   state.quizAnswers = [];
   showScreen("screen-quiz");
+  startOverallTimer();
   renderQuizQuestion();
-  startTimer();
 });
 
 // ============================================
 // Quiz screen
 // ============================================
 
-function startTimer() {
+const QUESTION_SECONDS = 10;
+
+// Overall run timer — deliberately NOT shown anywhere in the UI. It only exists
+// to record how long a player took, for tiebreaking on the daily leaderboard.
+function startOverallTimer() {
   state.quizStartTime = Date.now();
-  updateTimerDisplay();
-  state.timerInterval = setInterval(updateTimerDisplay, 1000);
 }
 
-function stopTimer() {
-  clearInterval(state.timerInterval);
+function stopOverallTimer() {
   return Math.round((Date.now() - state.quizStartTime) / 1000);
 }
 
-function updateTimerDisplay() {
-  const elapsed = Math.floor((Date.now() - state.quizStartTime) / 1000);
-  const mins = Math.floor(elapsed / 60);
-  const secs = elapsed % 60;
-  document.getElementById("quiz-timer").textContent = `${mins}:${String(secs).padStart(2, "0")}`;
+// Per-question countdown — this IS shown, and auto-submits a "no answer" once it hits 0
+// so people can't stall on a question to go look the answer up.
+function startQuestionTimer() {
+  clearQuestionTimer();
+  state.questionSecondsLeft = QUESTION_SECONDS;
+  updateQuestionTimerDisplay();
+  state.questionTimerInterval = setInterval(() => {
+    state.questionSecondsLeft -= 1;
+    updateQuestionTimerDisplay();
+    if (state.questionSecondsLeft <= 0) {
+      clearQuestionTimer();
+      resolveQuestion(null, null); // time's up, no answer selected
+    }
+  }, 1000);
+}
+
+function clearQuestionTimer() {
+  clearInterval(state.questionTimerInterval);
+}
+
+function updateQuestionTimerDisplay() {
+  const el = document.getElementById("quiz-timer");
+  el.textContent = String(Math.max(state.questionSecondsLeft, 0));
+  el.classList.toggle("warning", state.questionSecondsLeft <= 3);
 }
 
 function renderQuizQuestion() {
@@ -239,28 +260,32 @@ function renderQuizQuestion() {
     const btn = document.createElement("button");
     btn.className = "choice-btn";
     btn.textContent = choice;
-    btn.addEventListener("click", () => handleAnswer(choice, btn));
+    btn.addEventListener("click", () => resolveQuestion(choice, btn));
     choicesEl.appendChild(btn);
   });
+
+  startQuestionTimer();
 }
 
-function handleAnswer(choice, btnEl) {
+// choice is null when the 10-second timer expired with nothing selected.
+function resolveQuestion(choice, btnEl) {
+  clearQuestionTimer();
   const q = state.questions[state.quizIndex];
-  const isCorrect = choice === q.correctAnswer;
+  const isCorrect = choice !== null && choice === q.correctAnswer;
 
   document.querySelectorAll(".choice-btn").forEach((b) => {
     b.disabled = true;
     if (b.textContent === q.correctAnswer) b.classList.add("correct");
-    else if (b === btnEl) b.classList.add("wrong");
+    else if (btnEl && b === btnEl) b.classList.add("wrong");
   });
-  btnEl.blur(); // some browsers keep a focus ring lit after a mouse click; drop it explicitly
+  if (btnEl) btnEl.blur(); // some browsers keep a focus ring lit after a mouse click; drop it explicitly
 
   state.quizAnswers.push({
     category: q.category,
     difficulty: q.difficulty,
     correct: isCorrect,
     question: q.question,
-    chosenAnswer: choice,
+    chosenAnswer: choice === null ? "(no answer — time ran out)" : choice,
     correctAnswer: q.correctAnswer,
   });
 
@@ -275,7 +300,7 @@ function handleAnswer(choice, btnEl) {
 }
 
 async function finishQuiz() {
-  const timeSeconds = stopTimer();
+  const timeSeconds = stopOverallTimer();
   const score = state.quizAnswers.filter((a) => a.correct).length;
   const entry = {
     score,
@@ -414,7 +439,12 @@ function renderDailyLeaderboard(body) {
           <td class="score">${formatTime(entry.timeSeconds)}</td>
         </tr>
         <tr class="detail-row hidden" data-detail="${i}">
-          <td colspan="4"><div class="answer-detail">${detailRows}</div></td>
+          <td colspan="4">
+            <div class="answer-detail">
+              ${detailRows}
+              <button class="reset-attempt-btn" data-reset="${name}">&#8634; Reset ${name}'s attempt for today</button>
+            </div>
+          </td>
         </tr>`;
     })
     .join("");
@@ -434,6 +464,106 @@ function renderDailyLeaderboard(body) {
       caret.classList.toggle("open");
     });
   });
+
+  body.querySelectorAll("[data-reset]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation(); // don't let this bubble up and re-toggle the row
+      resetTodayAttempt(btn.dataset.reset);
+    });
+  });
+}
+
+// Clears a player's score for today so they can retake it — for when something
+// went wrong (bad connection, misclick on the wrong name, etc).
+async function resetTodayAttempt(name) {
+  const confirmed = confirm(
+    `Reset ${name}'s attempt for today? They'll be able to play again, and this can't be undone.`
+  );
+  if (!confirmed) return;
+
+  if (state.scoresRecord[state.today]) {
+    delete state.scoresRecord[state.today][name];
+  }
+
+  try {
+    await jsonbinPut(CONFIG.SCORES_BIN_ID, state.scoresRecord);
+    showToast(`${name}'s attempt was reset.`);
+  } catch (e) {
+    console.error(e);
+    showToast("Reset locally, but couldn't sync — check your JSONBin setup.");
+  }
+
+  renderDailyLeaderboard(document.getElementById("leaderboard-body"));
+  if (state.currentPlayer) renderPlayerGrid();
+}
+
+function renderTrophyLeaderboard(body) {
+  // ---- All-time leader ----
+  const allAgg = aggregate(() => true);
+  const allWins = countWins(() => true);
+  const champRows = Object.entries(allAgg)
+    .map(([name, a]) => ({
+      name,
+      games: a.games,
+      avgScore: a.games ? a.totalScore / a.games : 0,
+      wins: allWins[name] || 0,
+    }))
+    .sort((a, b) => b.wins - a.wins || b.avgScore - a.avgScore);
+
+  let champHtml = `<p class="empty-state">No games played yet.</p>`;
+  if (champRows.length) {
+    const c = champRows[0];
+    const label = c.wins > 0 ? "Reigning Champion" : "Current Leader";
+    champHtml = `
+      <div class="trophy-champion">
+        <div class="name">🏆 ${c.name}</div>
+        <div class="meta">${label} · ${c.wins} daily win${c.wins === 1 ? "" : "s"} · ${c.avgScore.toFixed(1)} avg score · ${c.games} games played</div>
+      </div>`;
+  }
+
+  // ---- Season (monthly) winners, most recent first ----
+  const months = Array.from(new Set(dateEntries(state.scoresRecord).map(([date]) => monthKeyOf(date))))
+    .sort()
+    .reverse();
+
+  let seasonsHtml = `<p class="empty-state">Season winners will show up once a month's worth of games are in.</p>`;
+  if (months.length) {
+    const rowsHtml = months
+      .map((month) => {
+        const filter = (date) => monthKeyOf(date) === month;
+        const agg = aggregate(filter);
+        const wins = countWins(filter);
+        const rows = Object.entries(agg)
+          .map(([name, a]) => ({
+            name,
+            avgScore: a.games ? a.totalScore / a.games : 0,
+            wins: wins[name] || 0,
+          }))
+          .sort((a, b) => b.avgScore - a.avgScore || b.wins - a.wins);
+        if (!rows.length) return "";
+
+        const winner = rows[0];
+        const label = new Date(`${month}-01T00:00:00`).toLocaleDateString(undefined, {
+          month: "long",
+          year: "numeric",
+        });
+        const isCurrent = month === monthKeyOf(state.today);
+        return `<tr><td>${label}${isCurrent ? ' <span class="est-badge">in progress</span>' : ""}</td><td>${winner.name}</td><td class="score">${winner.avgScore.toFixed(1)} avg</td></tr>`;
+      })
+      .filter(Boolean)
+      .join("");
+    seasonsHtml = `<table class="lb-table"><thead><tr><th>Season</th><th>Winner</th><th>Avg Score</th></tr></thead><tbody>${rowsHtml}</tbody></table>`;
+  }
+
+  body.innerHTML = `
+    <div class="trophy-block">
+      <h3>All-Time</h3>
+      ${champHtml}
+    </div>
+    <div class="trophy-block">
+      <h3>Season Winners</h3>
+      ${seasonsHtml}
+    </div>`;
 }
 
 function renderLeaderboard(tab) {
@@ -441,6 +571,11 @@ function renderLeaderboard(tab) {
 
   if (tab === "daily") {
     renderDailyLeaderboard(body);
+    return;
+  }
+
+  if (tab === "trophy") {
+    renderTrophyLeaderboard(body);
     return;
   }
 

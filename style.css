@@ -143,9 +143,11 @@ main#app {
   text-align: center;
 }
 
-.player-card:hover {
-  border-color: var(--amber-dim);
-  transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+  .player-card:hover {
+    border-color: var(--amber-dim);
+    transform: translateY(-2px);
+  }
 }
 
 .player-card:focus { outline: 2px solid var(--amber); outline-offset: 2px; }
@@ -167,12 +169,15 @@ body.using-mouse .player-card:focus { outline: none; }
   font-family: var(--font-body);
   font-size: 0.9rem;
   cursor: pointer;
+  margin-top: 28px;
   padding: 4px 0;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.link-btn:hover { color: var(--amber); }
+@media (hover: hover) and (pointer: fine) {
+  .link-btn:hover { color: var(--amber); }
+}
 
 .screen-links {
   display: flex;
@@ -185,7 +190,7 @@ body.using-mouse .player-card:focus { outline: none; }
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 18px 22px;
-  margin-top: 16px;
+  margin-top: 24px;
 }
 
 .rules-panel h3 {
@@ -220,7 +225,9 @@ body.using-mouse .player-card:focus { outline: none; }
   transition: background 0.15s ease;
 }
 
-.primary-btn:hover { background: #ffbf5c; }
+@media (hover: hover) and (pointer: fine) {
+  .primary-btn:hover { background: #ffbf5c; }
+}
 .primary-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
 /* ---------- Lineup ticker (signature element) ---------- */
@@ -314,7 +321,9 @@ body.using-mouse .player-card:focus { outline: none; }
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 
-.choice-btn:hover { border-color: var(--amber-dim); }
+@media (hover: hover) and (pointer: fine) {
+  .choice-btn:hover { border-color: var(--amber-dim); }
+}
 
 .choice-btn:focus { outline: 2px solid var(--amber); outline-offset: 2px; }
 body.using-mouse .choice-btn:focus { outline: none; }
@@ -396,8 +405,10 @@ body.using-mouse .choice-btn:focus { outline: none; }
   cursor: pointer;
 }
 
-.lb-row-clickable:hover td {
-  background: rgba(245, 241, 232, 0.03);
+@media (hover: hover) and (pointer: fine) {
+  .lb-row-clickable:hover td {
+    background: rgba(245, 241, 232, 0.03);
+  }
 }
 
 .lb-caret {
@@ -466,8 +477,10 @@ body.using-mouse .choice-btn:focus { outline: none; }
   margin-top: 10px;
 }
 
-.reset-attempt-btn:hover {
-  background: rgba(196, 82, 90, 0.12);
+@media (hover: hover) and (pointer: fine) {
+  .reset-attempt-btn:hover {
+    background: rgba(196, 82, 90, 0.12);
+  }
 }
 
 .trophy-block {

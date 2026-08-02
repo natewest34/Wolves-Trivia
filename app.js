@@ -131,10 +131,6 @@ function renderPlayerGrid() {
   });
 }
 
-document.getElementById("how-to-play-btn").addEventListener("click", () => {
-  document.getElementById("how-to-play-panel").classList.toggle("hidden");
-});
-
 document.getElementById("add-player-btn").addEventListener("click", async () => {
   const name = prompt("Add a player (first name is fine):");
   if (!name) return;

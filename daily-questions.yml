@@ -1,0 +1,25 @@
+name: Fetch Daily Trivia Questions
+
+on:
+  schedule:
+    # 06:00 UTC ≈ midnight Central (CDT, summer) / 1am Central (CST, winter).
+    # Cron doesn't auto-adjust for daylight saving — the +/-1hr drift twice a year
+    # is harmless here (still well before anyone's awake to play).
+    - cron: "0 6 * * *"
+  workflow_dispatch: {} # lets you manually trigger a run from the Actions tab, e.g. if a scheduled run failed
+
+jobs:
+  fetch-questions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch and cache today's questions
+        env:
+          JSONBIN_API_KEY: ${{ secrets.JSONBIN_API_KEY }}
+          QUESTIONS_BIN_ID: ${{ secrets.QUESTIONS_BIN_ID }}
+        run: node scripts/fetch-daily-questions.mjs

@@ -41,6 +41,23 @@
     </div>
   </section>
 
+  <!-- SCREEN: Loading -->
+  <section id="screen-loading" class="screen hidden">
+    <h1 class="screen-title">One sec…</h1>
+    <p class="screen-sub">Checking today's board.</p>
+  </section>
+
+  <!-- SCREEN: Not Ready -->
+  <section id="screen-not-ready" class="screen hidden">
+    <h1 class="screen-title">Hang tight</h1>
+    <p class="screen-sub">
+      Today's questions haven't loaded yet. They're pulled in automatically overnight —
+      this usually sorts itself out within a few minutes. Try again shortly.
+    </p>
+    <button id="retry-questions-btn" class="primary-btn">Try again</button>
+    <button id="not-ready-back-btn" class="link-btn">&larr; Switch player</button>
+  </section>
+
   <!-- SCREEN: Today's Lineup -->
   <section id="screen-lineup" class="screen hidden">
     <h1 class="screen-title">Today's Lineup</h1>
@@ -84,7 +101,6 @@
 
 <script src="config.js"></script>
 <script src="jsonbin.js"></script>
-<script src="opentdb.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

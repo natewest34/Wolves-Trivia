@@ -161,35 +161,46 @@ async function selectPlayer(name) {
     return;
   }
 
-  await ensureTodayQuestions();
+  showScreen("screen-loading");
+  const ready = await ensureTodayQuestions();
+  if (!ready) {
+    showScreen("screen-not-ready");
+    return;
+  }
   renderLineup();
   showScreen("screen-lineup");
 }
 
+document.getElementById("retry-questions-btn").addEventListener("click", () => selectPlayer(state.currentPlayer));
+document.getElementById("not-ready-back-btn").addEventListener("click", () => {
+  renderPlayerGrid();
+  showScreen("screen-players");
+});
+
 // ============================================
-// Today's questions (fetch once, cache in JSONBin)
+// Today's questions — read-only from the client's perspective.
+// A GitHub Action (see .github/workflows/daily-questions.yml) fetches and caches
+// each day's 10 questions on a schedule. If they're not there yet (Action hasn't
+// run, or failed), play is blocked rather than trying to fetch live in the browser.
 // ============================================
 
 async function ensureTodayQuestions() {
-  if (state.questions.length) return;
+  if (state.questions.length) return true;
 
-  const questionsRecord = await jsonbinGetOrEmpty(CONFIG.QUESTIONS_BIN_ID);
+  let questionsRecord;
+  try {
+    questionsRecord = await jsonbinGetOrEmpty(CONFIG.QUESTIONS_BIN_ID);
+  } catch (e) {
+    console.error("Couldn't reach JSONBin to check today's questions:", e);
+    return false;
+  }
+
   const cached = questionsRecord[state.today];
-
   if (cached && Array.isArray(cached.questions) && cached.questions.length === 10) {
     state.questions = cached.questions;
-    return;
+    return true;
   }
-
-  const questions = await fetchDailyQuestions();
-  state.questions = questions;
-
-  questionsRecord[state.today] = { questions, fetchedAt: new Date().toISOString() };
-  try {
-    await jsonbinPut(CONFIG.QUESTIONS_BIN_ID, questionsRecord);
-  } catch (e) {
-    console.warn("Couldn't cache today's questions (still playable locally):", e);
-  }
+  return false; // GitHub Action hasn't published today's set yet (or it failed) — block play
 }
 
 // ============================================

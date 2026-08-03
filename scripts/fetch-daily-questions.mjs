@@ -6,11 +6,22 @@
 // manually: JSONBIN_API_KEY=... QUESTIONS_BIN_ID=... node scripts/fetch-daily-questions.mjs
 // ============================================
 
+import CONFIG from "../config.js";
+
 const JSONBIN_API_KEY = process.env.JSONBIN_API_KEY;
 const QUESTIONS_BIN_ID = process.env.QUESTIONS_BIN_ID;
 
-// Keep in sync with config.js's DIFFICULTY_MIX on the client.
-const DIFFICULTY_MIX = { easy: 3, medium: 4, hard: 3 };
+// Difficulty mix and category exclusions both live in config.js now, so there's
+// one place to edit rather than keeping this file in sync by hand.
+const DIFFICULTY_MIX = CONFIG.DIFFICULTY_MIX;
+const EXCLUDED_TERMS = (CONFIG.EXCLUDED_CATEGORIES || [])
+  .map((c) => c.toLowerCase().trim())
+  .filter(Boolean);
+
+function isExcludedCategory(categoryName) {
+  const lower = categoryName.toLowerCase();
+  return EXCLUDED_TERMS.some((term) => lower.includes(term));
+}
 
 // The timezone your players are actually in. This determines what "today" means —
 // it must match the local date the client computes in the browser (todayKey() in
@@ -88,33 +99,58 @@ function normalizeQuestion(raw) {
 async function fetchDailyQuestions() {
   const token = await requestSessionToken();
   const mix = Object.entries(DIFFICULTY_MIX).filter(([, amount]) => amount > 0);
+  const targetTotal = Object.values(DIFFICULTY_MIX).reduce((a, b) => a + b, 0);
 
+  let excludedCount = 0;
+  const excludedCategoriesSeen = new Set();
   const results = [];
+
+  function addFiltered(rawBatch) {
+    for (const raw of rawBatch) {
+      const q = normalizeQuestion(raw);
+      if (isExcludedCategory(q.category)) {
+        excludedCount += 1;
+        excludedCategoriesSeen.add(q.category);
+      } else {
+        results.push(q);
+      }
+    }
+  }
+
   for (let i = 0; i < mix.length; i++) {
     const [difficulty, amount] = mix[i];
     if (i > 0) await sleep(5500);
-    const batch = await fetchBatch(amount, difficulty, token);
-    results.push(...batch);
+    addFiltered(await fetchBatch(amount, difficulty, token));
   }
 
-  const targetTotal = Object.values(DIFFICULTY_MIX).reduce((a, b) => a + b, 0);
-  let shortfall = targetTotal - results.length;
-
-  while (shortfall > 0) {
+  // Top up for anything short of 10 — whether from OpenTDB running out for a
+  // difficulty, or from questions we just filtered out for being an excluded category.
+  // Capped so an overly broad exclusion list can't loop forever burning Action minutes.
+  const MAX_TOPUP_ATTEMPTS = 8;
+  let attempts = 0;
+  while (results.length < targetTotal && attempts < MAX_TOPUP_ATTEMPTS) {
+    attempts += 1;
     await sleep(5500);
-    const topUp = await fetchBatch(shortfall, null, token);
+    const shortfall = targetTotal - results.length;
+    const topUp = await fetchBatch(Math.max(shortfall, 5), null, token); // ask for a few extra to absorb likely exclusions
     if (!topUp.length) break;
-    results.push(...topUp);
-    shortfall = targetTotal - results.length;
+    addFiltered(topUp);
+  }
+
+  if (excludedCount) {
+    console.log(
+      `Filtered out ${excludedCount} question(s) from excluded categories: ${[...excludedCategoriesSeen].join(", ")}`
+    );
   }
 
   if (results.length < targetTotal) {
     throw new Error(
-      `Only got ${results.length}/${targetTotal} questions from OpenTDB after retries — leaving today's slot empty rather than publishing a short set.`
+      `Only got ${results.length}/${targetTotal} questions from OpenTDB after retries and category filtering — leaving today's slot empty rather than publishing a short set. (If EXCLUDED_CATEGORIES in config.js is very broad, this can happen — consider trimming it.)`
     );
   }
 
-  return shuffle(results.map(normalizeQuestion));
+  // We may have collected a few more than targetTotal (from the "ask for extra" padding) — trim to exactly 10.
+  return shuffle(results).slice(0, targetTotal);
 }
 
 async function jsonbinGetOrEmpty() {
@@ -145,6 +181,9 @@ async function main() {
 
   const dateKey = todayKeyInTimezone(GROUP_TIMEZONE);
   console.log(`Preparing questions for ${dateKey} (${GROUP_TIMEZONE})...`);
+  if (EXCLUDED_TERMS.length) {
+    console.log(`Excluding categories matching: ${EXCLUDED_TERMS.join(", ")}`);
+  }
 
   const questionsRecord = await jsonbinGetOrEmpty();
   const existing = questionsRecord[dateKey];

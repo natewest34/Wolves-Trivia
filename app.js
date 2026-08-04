@@ -88,10 +88,19 @@ function hasPlayedToday(name) {
   return !!(state.scoresRecord[state.today] && state.scoresRecord[state.today][name]);
 }
 
-// Returns the winning player's name for a given day's score object, once everyone
-// in state.players has an entry for that day — otherwise null. Ties break on faster time.
-function dayWinner(dayScores) {
-  if (!state.players.length || !state.players.every((p) => dayScores[p])) return null;
+// Returns the winning player's name for a given day's score object.
+// requireFullRoster=true (used for "today", still in progress) means nobody gets
+// crowned until every current player has submitted — that's the deliberate suspense
+// on the Today tab. For any day already in the past, that requirement doesn't apply:
+// the winner is just whoever did best among whoever actually played that day. Since
+// this recalculates fresh every time the leaderboard renders, a day that finishes
+// partially-played (or wraps to the next day before everyone's played) automatically
+// gets its winner counted the next time anyone looks — no separate "finalize" step needed.
+function dayWinner(dayScores, requireFullRoster) {
+  const participants = Object.keys(dayScores);
+  if (!participants.length) return null;
+  if (requireFullRoster && !state.players.every((p) => dayScores[p])) return null;
+
   const sorted = Object.entries(dayScores).sort((a, b) => {
     if (b[1].score !== a[1].score) return b[1].score - a[1].score;
     const aTime = a[1].timeSeconds ?? Infinity;
@@ -102,7 +111,7 @@ function dayWinner(dayScores) {
 }
 
 function getTodayWinner() {
-  return dayWinner(state.scoresRecord[state.today] || {});
+  return dayWinner(state.scoresRecord[state.today] || {}, true);
 }
 
 // player -> number of days won, within the given date filter
@@ -110,7 +119,8 @@ function countWins(dateFilterFn) {
   const wins = {};
   dateEntries(state.scoresRecord).forEach(([date, dayScores]) => {
     if (!dateFilterFn(date)) return;
-    const winner = dayWinner(dayScores);
+    const isToday = date === state.today;
+    const winner = dayWinner(dayScores, isToday); // full roster required only for the live day
     if (winner) wins[winner] = (wins[winner] || 0) + 1;
   });
   return wins;

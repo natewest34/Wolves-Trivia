@@ -161,8 +161,17 @@ document.getElementById("add-player-btn").addEventListener("click", async () => 
   }
 });
 
+async function refreshScoresRecord() {
+  try {
+    state.scoresRecord = await jsonbinGetOrEmpty(CONFIG.SCORES_BIN_ID);
+  } catch (e) {
+    console.warn("Couldn't refresh scores from JSONBin — showing last-known data.", e);
+  }
+}
+
 async function selectPlayer(name) {
   state.currentPlayer = name;
+  await refreshScoresRecord(); // don't decide played/not-played or render a leaderboard off a stale in-memory snapshot
 
   if (hasPlayedToday(name)) {
     renderLeaderboard("daily");
@@ -330,6 +339,18 @@ function resolveQuestion(choice, btnEl) {
   }, 1100);
 }
 
+// Applies a change to the scores bin safely: fetches a FRESH copy right before
+// writing (not whatever was in memory from page load, which could be hours stale),
+// applies the mutation to that fresh copy, writes it back, and updates local state
+// to match. This is what prevents one person's write from silently erasing someone
+// else's more recent score — see the "scores disappearing" bug this replaced.
+async function mutateScores(mutatorFn) {
+  const fresh = await jsonbinGetOrEmpty(CONFIG.SCORES_BIN_ID);
+  mutatorFn(fresh);
+  await jsonbinPut(CONFIG.SCORES_BIN_ID, fresh);
+  state.scoresRecord = fresh;
+}
+
 async function finishQuiz() {
   const timeSeconds = stopOverallTimer();
   const score = state.quizAnswers.filter((a) => a.correct).length;
@@ -341,14 +362,18 @@ async function finishQuiz() {
     submittedAt: new Date().toISOString(),
   };
 
-  if (!state.scoresRecord[state.today]) state.scoresRecord[state.today] = {};
-  state.scoresRecord[state.today][state.currentPlayer] = entry;
-
   try {
-    await jsonbinPut(CONFIG.SCORES_BIN_ID, state.scoresRecord);
+    await mutateScores((fresh) => {
+      if (!fresh[state.today]) fresh[state.today] = {};
+      fresh[state.today][state.currentPlayer] = entry;
+    });
   } catch (e) {
     console.error(e);
-    showToast("Score saved locally, but couldn't sync — check your JSONBin setup.");
+    showToast("Couldn't sync your score — check your connection and try again.");
+    // Fall back to updating local state so this session's UI still works,
+    // but this player's score won't be visible to others until a retry succeeds.
+    if (!state.scoresRecord[state.today]) state.scoresRecord[state.today] = {};
+    state.scoresRecord[state.today][state.currentPlayer] = entry;
   }
 
   document.getElementById("leaderboard-player-label").textContent =
@@ -369,7 +394,8 @@ document.getElementById("leaderboard-tabs").addEventListener("click", (e) => {
   renderLeaderboard(btn.dataset.tab);
 });
 
-document.getElementById("back-to-players-btn").addEventListener("click", () => {
+document.getElementById("back-to-players-btn").addEventListener("click", async () => {
+  await refreshScoresRecord();
   renderPlayerGrid();
   showScreen("screen-players");
 });
@@ -512,16 +538,15 @@ async function resetTodayAttempt(name) {
   );
   if (!confirmed) return;
 
-  if (state.scoresRecord[state.today]) {
-    delete state.scoresRecord[state.today][name];
-  }
-
   try {
-    await jsonbinPut(CONFIG.SCORES_BIN_ID, state.scoresRecord);
+    await mutateScores((fresh) => {
+      if (fresh[state.today]) delete fresh[state.today][name];
+    });
     showToast(`${name}'s attempt was reset.`);
   } catch (e) {
     console.error(e);
-    showToast("Reset locally, but couldn't sync — check your JSONBin setup.");
+    showToast("Couldn't reach JSONBin to reset — try again.");
+    return; // don't touch local state if we're not sure the server-side reset actually happened
   }
 
   renderDailyLeaderboard(document.getElementById("leaderboard-body"));

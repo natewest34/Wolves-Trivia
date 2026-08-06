@@ -15,10 +15,13 @@ const state = {
   questionSecondsLeft: 20,
 };
 
-function todayKey() {
-  const d = new Date();
+function dateKeyOf(d) {
   const pad = (n) => String(n).padStart(2, "0");
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
+function todayKey() {
+  return dateKeyOf(new Date());
 }
 
 function monthKeyOf(dateStr) {
@@ -32,6 +35,46 @@ const DATE_KEY_RE = /^\d{4}-\d{2}-\d{2}$/;
 // and that placeholder must never be treated as a day of scores.
 function dateEntries(scoresRecord) {
   return Object.entries(scoresRecord).filter(([key]) => DATE_KEY_RE.test(key));
+}
+
+function playedOn(name, dateKey) {
+  const day = state.scoresRecord[dateKey];
+  return !!(day && day[name]);
+}
+
+// Current consecutive-day streak for a player, ending today if they've already
+// played today, or ending yesterday (not yet broken) if they haven't played yet today.
+function currentStreak(name) {
+  let cursor = new Date(`${state.today}T00:00:00`);
+  if (!playedOn(name, state.today)) {
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  let streak = 0;
+  while (playedOn(name, dateKeyOf(cursor))) {
+    streak += 1;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  return streak;
+}
+
+// Longest streak this player has ever had, including past (already-ended) runs.
+function longestStreakEver(name) {
+  const playedDates = dateEntries(state.scoresRecord)
+    .filter(([, day]) => day[name])
+    .map(([date]) => date)
+    .sort();
+  if (!playedDates.length) return 0;
+
+  let longest = 1;
+  let run = 1;
+  for (let i = 1; i < playedDates.length; i++) {
+    const prev = new Date(`${playedDates[i - 1]}T00:00:00`);
+    const cur = new Date(`${playedDates[i]}T00:00:00`);
+    const diffDays = Math.round((cur - prev) / 86400000);
+    run = diffDays === 1 ? run + 1 : 1;
+    longest = Math.max(longest, run);
+  }
+  return longest;
 }
 
 function showToast(msg) {
@@ -135,7 +178,9 @@ function renderPlayerGrid() {
     btn.className = "player-card";
     const badge = hasPlayedToday(name) ? '<span class="played-badge">&#10003;</span>' : "";
     const trophy = name === winner ? '<span class="trophy" title="Today\'s winner">🏆</span>' : "";
-    btn.innerHTML = `${name}${trophy}${badge}`;
+    const streak = currentStreak(name);
+    const streakBadge = streak >= 2 ? `<br><span class="streak-badge" title="${streak}-day streak">🔥${streak}</span>` : "";
+    btn.innerHTML = `${name}${trophy}${badge}${streakBadge}`;
     btn.addEventListener("click", () => selectPlayer(name));
     grid.appendChild(btn);
   });
@@ -485,6 +530,7 @@ function renderDailyLeaderboard(body) {
     .map(({ name, entry }, i) => {
       const isMe = name === state.currentPlayer;
       const isWinner = name === winnerName;
+      const isPerfect = entry.score === entry.total;
       const detailRows = (entry.answers || [])
         .map((a) => {
           if (!a.question) {
@@ -508,7 +554,7 @@ function renderDailyLeaderboard(body) {
       return `
         <tr class="lb-row-clickable ${isMe ? "me" : ""}" data-row="${i}">
           <td class="lb-rank">${i + 1}</td>
-          <td><span class="lb-caret" data-caret="${i}">&#9656;</span>${name}${isWinner ? '<span class="trophy" title="Today\'s winner">🏆</span>' : ""}</td>
+          <td><span class="lb-caret" data-caret="${i}">&#9656;</span>${name}${isWinner ? '<span class="trophy" title="Today\'s winner">🏆</span>' : ""}${isPerfect ? '<span class="perfect-badge" title="Perfect score!">💯</span>' : ""}</td>
           <td class="score">${entry.score}/${entry.total}</td>
           <td class="score">${formatTime(entry.timeSeconds)}</td>
         </tr>
@@ -642,6 +688,111 @@ function renderTrophyLeaderboard(body) {
     </div>`;
 }
 
+// Pulls together everything worth knowing about one player's history.
+function personalStats(name) {
+  const played = dateEntries(state.scoresRecord).filter(([, day]) => day[name]);
+
+  let totalScore = 0;
+  let totalQuestions = 0;
+  let perfectDays = 0;
+  let bestTime = null;
+  const categoryTally = {}; // category -> {correct, total}
+
+  played.forEach(([, day]) => {
+    const entry = day[name];
+    totalScore += entry.score;
+    totalQuestions += entry.total;
+    if (entry.score === entry.total) perfectDays += 1;
+    if (typeof entry.timeSeconds === "number" && (bestTime === null || entry.timeSeconds < bestTime)) {
+      bestTime = entry.timeSeconds;
+    }
+    (entry.answers || []).forEach((a) => {
+      if (!categoryTally[a.category]) categoryTally[a.category] = { correct: 0, total: 0 };
+      categoryTally[a.category].total += 1;
+      if (a.correct) categoryTally[a.category].correct += 1;
+    });
+  });
+
+  let best = null;
+  let worst = null;
+  Object.entries(categoryTally).forEach(([category, s]) => {
+    if (s.total < 2) return; // need a couple data points before calling it a best/worst
+    const acc = s.correct / s.total;
+    if (!best || acc > best.acc) best = { category, acc };
+    if (!worst || acc < worst.acc) worst = { category, acc };
+  });
+
+  const allTimeWins = countWins(() => true)[name] || 0;
+
+  return {
+    games: played.length,
+    avgScore: played.length ? totalScore / played.length : 0,
+    avgTotal: played.length ? totalQuestions / played.length : 0,
+    perfectDays,
+    bestTime,
+    currentStreak: currentStreak(name),
+    longestStreak: longestStreakEver(name),
+    wins: allTimeWins,
+    best,
+    worst,
+  };
+}
+
+function renderMyStats(body) {
+  const name = state.currentPlayer;
+  if (!name) {
+    body.innerHTML = `<p class="empty-state">Pick your name first to see your stats.</p>`;
+    return;
+  }
+
+  const s = personalStats(name);
+
+  if (!s.games) {
+    body.innerHTML = `<p class="empty-state">Play a round to start building your stats, ${name}.</p>`;
+    return;
+  }
+
+  const statCard = (label, value) => `
+    <div class="stat-card">
+      <div class="stat-value">${value}</div>
+      <div class="stat-label">${label}</div>
+    </div>`;
+
+  const statsGrid = `
+    <div class="stats-grid">
+      ${statCard("Games Played", s.games)}
+      ${statCard("Avg Score", `${s.avgScore.toFixed(1)}/${s.avgTotal.toFixed(0)}`)}
+      ${statCard("Current Streak", `🔥 ${s.currentStreak}`)}
+      ${statCard("Longest Streak", `🔥 ${s.longestStreak}`)}
+      ${statCard("Perfect Days", `💯 ${s.perfectDays}`)}
+      ${statCard("Daily Wins", `🏆 ${s.wins}`)}
+      ${statCard("Best Time", formatTime(s.bestTime))}
+    </div>`;
+
+  const categoryHtml = `
+    <div class="trophy-block">
+      <h3>Best &amp; Worst Categories</h3>
+      ${
+        s.best
+          ? `<p class="mystat-line">Strongest: <strong>${s.best.category}</strong> (${Math.round(s.best.acc * 100)}%)</p>`
+          : ""
+      }
+      ${
+        s.worst && s.worst.category !== s.best?.category
+          ? `<p class="mystat-line">Room to grow: <strong>${s.worst.category}</strong> (${Math.round(s.worst.acc * 100)}%)</p>`
+          : ""
+      }
+      ${!s.best ? `<p class="empty-state">Play a few more rounds to see your category breakdown.</p>` : ""}
+    </div>`;
+
+  body.innerHTML = `
+    <div class="trophy-block">
+      <h3>${name}'s Stats</h3>
+      ${statsGrid}
+    </div>
+    ${categoryHtml}`;
+}
+
 function renderLeaderboard(tab) {
   const body = document.getElementById("leaderboard-body");
 
@@ -652,6 +803,11 @@ function renderLeaderboard(tab) {
 
   if (tab === "trophy") {
     renderTrophyLeaderboard(body);
+    return;
+  }
+
+  if (tab === "mystats") {
+    renderMyStats(body);
     return;
   }
 

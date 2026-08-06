@@ -162,6 +162,15 @@ body.using-mouse .player-card:focus { outline: none; }
   font-size: 0.85rem;
 }
 
+.streak-badge {
+  display: inline-block;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--amber);
+  letter-spacing: 0.02em;
+}
+
 .link-btn {
   background: none;
   border: none;
@@ -437,6 +446,10 @@ body.using-mouse .choice-btn:focus { outline: none; }
   margin-left: 6px;
 }
 
+.perfect-badge {
+  margin-left: 6px;
+}
+
 .answer-detail {
   background: var(--navy-panel);
   border: 1px solid var(--line);
@@ -524,6 +537,43 @@ body.using-mouse .choice-btn:focus { outline: none; }
   font-size: 0.85rem;
   margin-top: 4px;
 }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 12px;
+}
+
+.stat-card {
+  background: var(--navy-panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 14px;
+  text-align: center;
+}
+
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  color: var(--amber);
+  font-weight: 600;
+}
+
+.stat-label {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--chalk-dim);
+  margin-top: 4px;
+}
+
+.mystat-line {
+  color: var(--chalk-dim);
+  font-size: 0.92rem;
+  margin: 0 0 8px;
+}
+
+.mystat-line:last-child { margin-bottom: 0; }
+.mystat-line strong { color: var(--chalk); }
 
 .empty-state {
   color: var(--chalk-dim);

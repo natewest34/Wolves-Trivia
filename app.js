@@ -445,6 +445,20 @@ function formatTime(seconds) {
   return `${mins}:${String(secs).padStart(2, "0")}`;
 }
 
+// Wires up a "Refresh" button rendered inside the Today tab — re-fetches scores
+// from JSONBin and re-renders, for when someone wants to see if anyone new has
+// played without waiting on the periodic re-fetches that happen at other nav points.
+function wireRefreshButton(body) {
+  const btn = body.querySelector("#refresh-today-btn");
+  if (!btn) return;
+  btn.addEventListener("click", async () => {
+    btn.disabled = true;
+    btn.textContent = "Refreshing…";
+    await refreshScoresRecord();
+    renderDailyLeaderboard(document.getElementById("leaderboard-body"));
+  });
+}
+
 function renderDailyLeaderboard(body) {
   const today = state.scoresRecord[state.today] || {};
   const rows = Object.entries(today)
@@ -458,7 +472,10 @@ function renderDailyLeaderboard(body) {
     });
 
   if (!rows.length) {
-    body.innerHTML = `<p class="empty-state">No scores yet — check back after today's board fills up.</p>`;
+    body.innerHTML = `
+      <button id="refresh-today-btn" class="link-btn">&#8635; Refresh</button>
+      <p class="empty-state">No scores yet — check back after today's board fills up.</p>`;
+    wireRefreshButton(body);
     return;
   }
 
@@ -507,10 +524,13 @@ function renderDailyLeaderboard(body) {
     .join("");
 
   body.innerHTML = `
+    <button id="refresh-today-btn" class="link-btn">&#8635; Refresh</button>
     <table class="lb-table">
       <thead><tr><th></th><th>Player</th><th>Score</th><th>Time</th></tr></thead>
       <tbody>${rowsHtml}</tbody>
     </table>`;
+
+  wireRefreshButton(body);
 
   body.querySelectorAll("[data-row]").forEach((tr) => {
     tr.addEventListener("click", () => {
@@ -650,7 +670,7 @@ function renderLeaderboard(tab) {
         avgTime: a.timedGames ? Math.round(a.totalTime / a.timedGames) : null,
         wins: wins[name] || 0,
       }))
-      .sort((a, b) => b.avgScore - a.avgScore || b.wins - a.wins);
+      .sort((a, b) => b.wins - a.wins || b.avgScore - a.avgScore);
 
     const seasonHeading =
       tab === "monthly"

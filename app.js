@@ -278,7 +278,7 @@ function renderQuizQuestion() {
   startQuestionTimer();
 }
 
-// choice is null when the 10-second timer expired with nothing selected.
+// choice is null when the countdown timer expired with nothing selected.
 function resolveQuestion(choice, btnEl) {
   clearQuestionTimer();
   const q = state.questions[state.quizIndex];

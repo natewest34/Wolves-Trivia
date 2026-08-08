@@ -17,22 +17,29 @@ function sleep(ms) {
 async function fetchWithRetry(url, options, { retries = 2, baseDelayMs = 600 } = {}) {
   let lastErr;
   for (let attempt = 0; attempt <= retries; attempt++) {
+    let res;
     try {
-      const res = await fetch(url, options);
-      if (res.ok) return res;
-      if ((res.status >= 500 || res.status === 429) && attempt < retries) {
-        await sleep(baseDelayMs * 2 ** attempt);
-        continue;
-      }
-      throw new Error(`JSONBin request failed: ${res.status}`);
-    } catch (e) {
-      lastErr = e;
+      res = await fetch(url, options);
+    } catch (networkErr) {
+      // fetch() itself throwing means a genuine network failure — always worth retrying.
+      lastErr = networkErr;
       if (attempt < retries) {
         await sleep(baseDelayMs * 2 ** attempt);
         continue;
       }
-      throw e;
+      throw networkErr;
     }
+
+    if (res.ok) return res;
+
+    if ((res.status >= 500 || res.status === 429) && attempt < retries) {
+      await sleep(baseDelayMs * 2 ** attempt);
+      continue;
+    }
+
+    // Non-retryable HTTP error (4xx other than 429, or genuinely out of retries) —
+    // thrown outside any catch here, so it can't accidentally re-enter the retry path.
+    throw new Error(`JSONBin request failed: ${res.status}`);
   }
   throw lastErr;
 }

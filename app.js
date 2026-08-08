@@ -15,66 +15,13 @@ const state = {
   questionSecondsLeft: 20,
 };
 
-function dateKeyOf(d) {
-  const pad = (n) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-}
+// dateKeyOf, monthKeyOf, dateEntries, playedOn, currentStreak, longestStreakEver,
+// dayWinner, aggregate, and countWins now live in lib/trivia-core.js (loaded before
+// this file, see index.html) — they're plain globals there, same as they were here,
+// just shared with the Node test suite and the GitHub Action script too.
 
 function todayKey() {
   return dateKeyOf(new Date());
-}
-
-function monthKeyOf(dateStr) {
-  return dateStr.slice(0, 7); // "YYYY-MM"
-}
-
-const DATE_KEY_RE = /^\d{4}-\d{2}-\d{2}$/;
-
-// Only ever iterate real "YYYY-MM-DD" entries in the scores record — bins are seeded
-// with a placeholder key (e.g. "_init") to satisfy JSONBin's "can't be empty" check,
-// and that placeholder must never be treated as a day of scores.
-function dateEntries(scoresRecord) {
-  return Object.entries(scoresRecord).filter(([key]) => DATE_KEY_RE.test(key));
-}
-
-function playedOn(name, dateKey) {
-  const day = state.scoresRecord[dateKey];
-  return !!(day && day[name]);
-}
-
-// Current consecutive-day streak for a player, ending today if they've already
-// played today, or ending yesterday (not yet broken) if they haven't played yet today.
-function currentStreak(name) {
-  let cursor = new Date(`${state.today}T00:00:00`);
-  if (!playedOn(name, state.today)) {
-    cursor.setDate(cursor.getDate() - 1);
-  }
-  let streak = 0;
-  while (playedOn(name, dateKeyOf(cursor))) {
-    streak += 1;
-    cursor.setDate(cursor.getDate() - 1);
-  }
-  return streak;
-}
-
-// Longest streak this player has ever had, including past (already-ended) runs.
-function longestStreakEver(name) {
-  const playedDates = dateEntries(state.scoresRecord)
-    .filter(([, day]) => day[name])
-    .map(([date]) => date)
-    .sort();
-  if (!playedDates.length) return 0;
-
-  let longest = 1;
-  let run = 1;
-  for (let i = 1; i < playedDates.length; i++) {
-    const prev = new Date(`${playedDates[i - 1]}T00:00:00`);
-    const cur = new Date(`${playedDates[i]}T00:00:00`);
-    const diffDays = Math.round((cur - prev) / 86400000);
-    run = diffDays === 1 ? run + 1 : 1;
-    longest = Math.max(longest, run);
-  }
-  return longest;
 }
 
 function showToast(msg) {
@@ -131,42 +78,10 @@ function hasPlayedToday(name) {
   return !!(state.scoresRecord[state.today] && state.scoresRecord[state.today][name]);
 }
 
-// Returns the winning player's name for a given day's score object.
-// requireFullRoster=true (used for "today", still in progress) means nobody gets
-// crowned until every current player has submitted — that's the deliberate suspense
-// on the Today tab. For any day already in the past, that requirement doesn't apply:
-// the winner is just whoever did best among whoever actually played that day. Since
-// this recalculates fresh every time the leaderboard renders, a day that finishes
-// partially-played (or wraps to the next day before everyone's played) automatically
-// gets its winner counted the next time anyone looks — no separate "finalize" step needed.
-function dayWinner(dayScores, requireFullRoster) {
-  const participants = Object.keys(dayScores);
-  if (!participants.length) return null;
-  if (requireFullRoster && !state.players.every((p) => dayScores[p])) return null;
-
-  const sorted = Object.entries(dayScores).sort((a, b) => {
-    if (b[1].score !== a[1].score) return b[1].score - a[1].score;
-    const aTime = a[1].timeSeconds ?? Infinity;
-    const bTime = b[1].timeSeconds ?? Infinity;
-    return aTime - bTime;
-  });
-  return sorted[0][0];
-}
-
+// dayWinner and countWins now live in lib/trivia-core.js as globals. getTodayWinner
+// stays here as a small app-specific convenience wrapper.
 function getTodayWinner() {
-  return dayWinner(state.scoresRecord[state.today] || {}, true);
-}
-
-// player -> number of days won, within the given date filter
-function countWins(dateFilterFn) {
-  const wins = {};
-  dateEntries(state.scoresRecord).forEach(([date, dayScores]) => {
-    if (!dateFilterFn(date)) return;
-    const isToday = date === state.today;
-    const winner = dayWinner(dayScores, isToday); // full roster required only for the live day
-    if (winner) wins[winner] = (wins[winner] || 0) + 1;
-  });
-  return wins;
+  return dayWinner(state.scoresRecord[state.today] || {}, state.players, true);
 }
 
 function renderPlayerGrid() {
@@ -176,11 +91,22 @@ function renderPlayerGrid() {
   state.players.forEach((name) => {
     const btn = document.createElement("button");
     btn.className = "player-card";
-    const badge = hasPlayedToday(name) ? '<span class="played-badge">&#10003;</span>' : "";
-    const trophy = name === winner ? '<span class="trophy" title="Today\'s winner">🏆</span>' : "";
-    const streak = currentStreak(name);
-    const streakBadge = streak >= 2 ? `<br><span class="streak-badge" title="${streak}-day streak">🔥${streak}</span>` : "";
+    const played = hasPlayedToday(name);
+    const isWinner = name === winner;
+    const streak = currentStreak(state.scoresRecord, state.today, name);
+
+    const badge = played ? '<span class="played-badge" aria-hidden="true">&#10003;</span>' : "";
+    const trophy = isWinner ? '<span class="trophy" aria-hidden="true">🏆</span>' : "";
+    const streakBadge =
+      streak >= 2 ? `<br><span class="streak-badge" aria-hidden="true">🔥${streak}</span>` : "";
     btn.innerHTML = `${name}${trophy}${badge}${streakBadge}`;
+
+    const labelParts = [name];
+    if (isWinner) labelParts.push("today's winner");
+    if (played) labelParts.push("already played today");
+    if (streak >= 2) labelParts.push(`${streak}-day streak`);
+    btn.setAttribute("aria-label", labelParts.join(", "));
+
     btn.addEventListener("click", () => selectPlayer(name));
     grid.appendChild(btn);
   });
@@ -445,26 +371,7 @@ document.getElementById("back-to-players-btn").addEventListener("click", async (
   showScreen("screen-players");
 });
 
-function aggregate(dateFilterFn) {
-  // player -> { totalScore, totalQuestions, games, totalTime, timedGames }
-  const agg = {};
-  dateEntries(state.scoresRecord).forEach(([date, dayScores]) => {
-    if (!dateFilterFn(date)) return;
-    Object.entries(dayScores).forEach(([player, entry]) => {
-      if (!agg[player]) {
-        agg[player] = { totalScore: 0, totalQuestions: 0, games: 0, totalTime: 0, timedGames: 0 };
-      }
-      agg[player].totalScore += entry.score;
-      agg[player].totalQuestions += entry.total;
-      agg[player].games += 1;
-      if (typeof entry.timeSeconds === "number") {
-        agg[player].totalTime += entry.timeSeconds;
-        agg[player].timedGames += 1;
-      }
-    });
-  });
-  return agg;
-}
+// aggregate() now lives in lib/trivia-core.js as a global.
 
 function renderTable(rows, columns) {
   if (!rows.length) {
@@ -554,7 +461,7 @@ function renderDailyLeaderboard(body) {
       return `
         <tr class="lb-row-clickable ${isMe ? "me" : ""}" data-row="${i}">
           <td class="lb-rank">${i + 1}</td>
-          <td><span class="lb-caret" data-caret="${i}">&#9656;</span>${name}${isWinner ? '<span class="trophy" title="Today\'s winner">🏆</span>' : ""}${isPerfect ? '<span class="perfect-badge" title="Perfect score!">💯</span>' : ""}</td>
+          <td><span class="lb-caret" data-caret="${i}" aria-hidden="true">&#9656;</span>${name}${isWinner ? '<span class="trophy" aria-hidden="true" title="Today\'s winner">🏆</span>' : ""}${isPerfect ? '<span class="perfect-badge" aria-hidden="true" title="Perfect score!">💯</span>' : ""}</td>
           <td class="score">${entry.score}/${entry.total}</td>
           <td class="score">${formatTime(entry.timeSeconds)}</td>
         </tr>
@@ -621,8 +528,8 @@ async function resetTodayAttempt(name) {
 
 function renderTrophyLeaderboard(body) {
   // ---- All-time leader ----
-  const allAgg = aggregate(() => true);
-  const allWins = countWins(() => true);
+  const allAgg = aggregate(state.scoresRecord, () => true);
+  const allWins = countWins(state.scoresRecord, state.players, state.today, () => true);
   const champRows = Object.entries(allAgg)
     .map(([name, a]) => ({
       name,
@@ -653,8 +560,8 @@ function renderTrophyLeaderboard(body) {
     const rowsHtml = months
       .map((month) => {
         const filter = (date) => monthKeyOf(date) === month;
-        const agg = aggregate(filter);
-        const wins = countWins(filter);
+        const agg = aggregate(state.scoresRecord, filter);
+        const wins = countWins(state.scoresRecord, state.players, state.today, filter);
         const rows = Object.entries(agg)
           .map(([name, a]) => ({
             name,
@@ -722,7 +629,7 @@ function personalStats(name) {
     if (!worst || acc < worst.acc) worst = { category, acc };
   });
 
-  const allTimeWins = countWins(() => true)[name] || 0;
+  const allTimeWins = countWins(state.scoresRecord, state.players, state.today, () => true)[name] || 0;
 
   return {
     games: played.length,
@@ -730,8 +637,8 @@ function personalStats(name) {
     avgTotal: played.length ? totalQuestions / played.length : 0,
     perfectDays,
     bestTime,
-    currentStreak: currentStreak(name),
-    longestStreak: longestStreakEver(name),
+    currentStreak: currentStreak(state.scoresRecord, state.today, name),
+    longestStreak: longestStreakEver(state.scoresRecord, name),
     wins: allTimeWins,
     best,
     worst,
@@ -814,8 +721,8 @@ function renderLeaderboard(tab) {
   if (tab === "alltime" || tab === "monthly") {
     const filter =
       tab === "alltime" ? () => true : (date) => monthKeyOf(date) === monthKeyOf(state.today);
-    const agg = aggregate(filter);
-    const wins = countWins(filter);
+    const agg = aggregate(state.scoresRecord, filter);
+    const wins = countWins(state.scoresRecord, state.players, state.today, filter);
 
     const rows = Object.entries(agg)
       .map(([name, a]) => ({

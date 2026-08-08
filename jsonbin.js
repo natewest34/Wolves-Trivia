@@ -6,17 +6,47 @@
 
 const JSONBIN_BASE = "https://api.jsonbin.io/v3/b";
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Retries transient failures (network drop, 5xx, 429 rate limit) with backoff.
+// Does NOT retry genuine client errors (bad API key, missing bin, etc.) — those
+// won't fix themselves on a retry, so failing fast there is more honest than
+// making someone wait through pointless retries.
+async function fetchWithRetry(url, options, { retries = 2, baseDelayMs = 600 } = {}) {
+  let lastErr;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const res = await fetch(url, options);
+      if (res.ok) return res;
+      if ((res.status >= 500 || res.status === 429) && attempt < retries) {
+        await sleep(baseDelayMs * 2 ** attempt);
+        continue;
+      }
+      throw new Error(`JSONBin request failed: ${res.status}`);
+    } catch (e) {
+      lastErr = e;
+      if (attempt < retries) {
+        await sleep(baseDelayMs * 2 ** attempt);
+        continue;
+      }
+      throw e;
+    }
+  }
+  throw lastErr;
+}
+
 async function jsonbinGet(binId) {
-  const res = await fetch(`${JSONBIN_BASE}/${binId}/latest`, {
+  const res = await fetchWithRetry(`${JSONBIN_BASE}/${binId}/latest`, {
     headers: { "X-Master-Key": CONFIG.JSONBIN_API_KEY },
   });
-  if (!res.ok) throw new Error(`JSONBin GET failed: ${res.status}`);
   const body = await res.json();
   return body.record;
 }
 
 async function jsonbinPut(binId, data) {
-  const res = await fetch(`${JSONBIN_BASE}/${binId}`, {
+  const res = await fetchWithRetry(`${JSONBIN_BASE}/${binId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -24,7 +54,6 @@ async function jsonbinPut(binId, data) {
     },
     body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error(`JSONBin PUT failed: ${res.status}`);
   return res.json();
 }
 

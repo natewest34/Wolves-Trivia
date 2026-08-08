@@ -1,0 +1,43 @@
+name: Backup Scores
+
+on:
+  schedule:
+    # Runs nightly, offset from the daily-questions Action so they don't compete
+    # for JSONBin at the exact same moment.
+    - cron: "30 6 * * *"
+  workflow_dispatch: {} # lets you manually trigger a run from the Actions tab
+
+# Required so this workflow can commit the backup file back into the repo.
+# If commits fail with a permissions error, check Settings → Actions → General →
+# "Workflow permissions" and make sure "Read and write permissions" is selected —
+# see README-ADDONS.md for the full walkthrough.
+permissions:
+  contents: write
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch scores and write backup file
+        env:
+          JSONBIN_API_KEY: ${{ secrets.JSONBIN_API_KEY }}
+          SCORES_BIN_ID: ${{ secrets.SCORES_BIN_ID }}
+        run: node scripts/backup-scores.mjs
+
+      - name: Commit backup if anything changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add backups/
+          if git diff --cached --quiet; then
+            echo "No changes to back up today."
+          else
+            git commit -m "Nightly scores backup"
+            git push
+          fi

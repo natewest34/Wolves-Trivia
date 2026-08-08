@@ -4,12 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Daily Trivia</title>
+
+<!-- Add to Home Screen support -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0d1626">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Trivia">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 
 <header class="topbar">
   <div class="topbar-inner">
@@ -72,10 +83,10 @@
       <div id="quiz-progress" class="quiz-progress"></div>
       <div id="quiz-category" class="quiz-category"></div>
     </div>
-    <h2 id="quiz-question" class="quiz-question"></h2>
+    <h2 id="quiz-question" class="quiz-question" aria-live="polite"></h2>
     <div id="quiz-choices" class="quiz-choices"></div>
     <div class="quiz-timer-wrap">
-      <div id="quiz-timer" class="quiz-timer">20</div>
+      <div id="quiz-timer" class="quiz-timer" aria-hidden="true">20</div>
     </div>
   </section>
 
@@ -100,10 +111,20 @@
 
 </main>
 
-<div id="toast" class="toast hidden"></div>
+<div id="toast" class="toast hidden" role="status" aria-live="polite" aria-atomic="true"></div>
 
 <script src="config.js"></script>
+<script src="lib/trivia-core.js"></script>
 <script src="jsonbin.js"></script>
 <script src="app.js"></script>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("sw.js").catch((e) => {
+        console.warn("Service worker registration failed (site still works fine without it):", e);
+      });
+    });
+  }
+</script>
 </body>
 </html>

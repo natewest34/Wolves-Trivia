@@ -142,7 +142,13 @@ async function refreshScoresRecord() {
 
 async function selectPlayer(name) {
   state.currentPlayer = name;
-  await refreshScoresRecord(); // don't decide played/not-played or render a leaderboard off a stale in-memory snapshot
+  // Deliberately NOT auto-refreshing scores here — this fires on every single
+  // name tap, and was one of the biggest drivers of JSONBin request volume for
+  // very little real benefit: state.scoresRecord is already current from boot(),
+  // or was just updated in-memory by mutateScores() right after finishing a quiz.
+  // The one thing that actually has to be fresh — writes — still always fetches
+  // fresh immediately before writing (see mutateScores). Anyone who wants to see
+  // whether someone new has played can hit the "Refresh" button on the Today tab.
 
   if (hasPlayedToday(name)) {
     renderLeaderboard("daily");
@@ -365,8 +371,8 @@ document.getElementById("leaderboard-tabs").addEventListener("click", (e) => {
   renderLeaderboard(btn.dataset.tab);
 });
 
-document.getElementById("back-to-players-btn").addEventListener("click", async () => {
-  await refreshScoresRecord();
+document.getElementById("back-to-players-btn").addEventListener("click", () => {
+  // No auto-refresh here either — see the comment in selectPlayer() for why.
   renderPlayerGrid();
   showScreen("screen-players");
 });

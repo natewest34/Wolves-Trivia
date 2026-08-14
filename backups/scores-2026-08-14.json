@@ -1,0 +1,2049 @@
+{
+  "_init": "scores bin — daily results get added automatically",
+  "2026-08-02": {
+    "Nathan": {
+      "score": 3,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Vehicles",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "What manufacturer made the car used in Back to the Future?",
+          "chosenAnswer": "DeLorean",
+          "correctAnswer": "DeLorean"
+        },
+        {
+          "category": "Science: Mathematics",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "What is the correct order of operations for solving equations?",
+          "chosenAnswer": "Parentheses, Exponents, Multiplication, Division, Addition, Subtraction",
+          "correctAnswer": "Parentheses, Exponents, Multiplication, Division, Addition, Subtraction"
+        },
+        {
+          "category": "Science & Nature",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "Botanically speaking, which of these fruits is NOT a berry?",
+          "chosenAnswer": "Banana",
+          "correctAnswer": "Strawberry"
+        },
+        {
+          "category": "Entertainment: Japanese Anime & Manga",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "What is the name of the final villain in the manga series \"Bleach\"?",
+          "chosenAnswer": "Juha Bach",
+          "correctAnswer": "Yhwach"
+        },
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Who played Batman in the 1997 film \"Batman and Robin\"?",
+          "chosenAnswer": "Michael Keaton",
+          "correctAnswer": "George Clooney"
+        },
+        {
+          "category": "Entertainment: Television",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "Which of these voices wasn't a choice for the House AI in \"The Simpsons Treehouse of Horror\" short, House of Whacks?",
+          "chosenAnswer": "Pierce Brosnan",
+          "correctAnswer": "George Clooney"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which sign of the zodiac is represented by the Crab?",
+          "chosenAnswer": "Virgo",
+          "correctAnswer": "Cancer"
+        },
+        {
+          "category": "Science: Computers",
+          "difficulty": "hard",
+          "correct": true,
+          "question": "CMOS is tech used for constructing integrated circuits. What does CMOS stand for?",
+          "chosenAnswer": "Complementary metal–oxide–semiconductor",
+          "correctAnswer": "Complementary metal–oxide–semiconductor"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which genre of music is John Coltrane primarily associated with?",
+          "chosenAnswer": "Folk",
+          "correctAnswer": "Jazz"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "'Don't You Want Me?' was a number one hit in 1981 for which electropop band?",
+          "chosenAnswer": "Pet Shop Boys",
+          "correctAnswer": "Human League"
+        }
+      ],
+      "timeSeconds": 71,
+      "submittedAt": "2026-08-02T16:23:07.807Z"
+    },
+    "Tanner": {
+      "score": 2,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Vehicles",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "What manufacturer made the car used in Back to the Future?",
+          "chosenAnswer": "DeLorean",
+          "correctAnswer": "DeLorean"
+        },
+        {
+          "category": "Science: Mathematics",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "What is the correct order of operations for solving equations?",
+          "chosenAnswer": "Parentheses, Exponents, Multiplication, Division, Addition, Subtraction",
+          "correctAnswer": "Parentheses, Exponents, Multiplication, Division, Addition, Subtraction"
+        },
+        {
+          "category": "Science & Nature",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "Botanically speaking, which of these fruits is NOT a berry?",
+          "chosenAnswer": "Banana",
+          "correctAnswer": "Strawberry"
+        },
+        {
+          "category": "Entertainment: Japanese Anime & Manga",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "What is the name of the final villain in the manga series \"Bleach\"?",
+          "chosenAnswer": "Yuhabah",
+          "correctAnswer": "Yhwach"
+        },
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Who played Batman in the 1997 film \"Batman and Robin\"?",
+          "chosenAnswer": "Michael Keaton",
+          "correctAnswer": "George Clooney"
+        },
+        {
+          "category": "Entertainment: Television",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "Which of these voices wasn't a choice for the House AI in \"The Simpsons Treehouse of Horror\" short, House of Whacks?",
+          "chosenAnswer": "Matthew Perry",
+          "correctAnswer": "George Clooney"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which sign of the zodiac is represented by the Crab?",
+          "chosenAnswer": "Sagittarius",
+          "correctAnswer": "Cancer"
+        },
+        {
+          "category": "Science: Computers",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "CMOS is tech used for constructing integrated circuits. What does CMOS stand for?",
+          "chosenAnswer": "Complementary magnetic-ohms-semiconductor",
+          "correctAnswer": "Complementary metal–oxide–semiconductor"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which genre of music is John Coltrane primarily associated with?",
+          "chosenAnswer": "Rock and Roll",
+          "correctAnswer": "Jazz"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "'Don't You Want Me?' was a number one hit in 1981 for which electropop band?",
+          "chosenAnswer": "Eurythmics",
+          "correctAnswer": "Human League"
+        }
+      ],
+      "timeSeconds": 81,
+      "submittedAt": "2026-08-02T16:38:49.416Z"
+    },
+    "Jake": {
+      "score": 5,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Vehicles",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "What manufacturer made the car used in Back to the Future?",
+          "chosenAnswer": "DeLorean",
+          "correctAnswer": "DeLorean"
+        },
+        {
+          "category": "Science: Mathematics",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "What is the correct order of operations for solving equations?",
+          "chosenAnswer": "Parentheses, Exponents, Multiplication, Division, Addition, Subtraction",
+          "correctAnswer": "Parentheses, Exponents, Multiplication, Division, Addition, Subtraction"
+        },
+        {
+          "category": "Science & Nature",
+          "difficulty": "hard",
+          "correct": true,
+          "question": "Botanically speaking, which of these fruits is NOT a berry?",
+          "chosenAnswer": "Strawberry",
+          "correctAnswer": "Strawberry"
+        },
+        {
+          "category": "Entertainment: Japanese Anime & Manga",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "What is the name of the final villain in the manga series \"Bleach\"?",
+          "chosenAnswer": "Yuhabah",
+          "correctAnswer": "Yhwach"
+        },
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Who played Batman in the 1997 film \"Batman and Robin\"?",
+          "chosenAnswer": "George Clooney",
+          "correctAnswer": "George Clooney"
+        },
+        {
+          "category": "Entertainment: Television",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "Which of these voices wasn't a choice for the House AI in \"The Simpsons Treehouse of Horror\" short, House of Whacks?",
+          "chosenAnswer": "Pierce Brosnan",
+          "correctAnswer": "George Clooney"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Which sign of the zodiac is represented by the Crab?",
+          "chosenAnswer": "Cancer",
+          "correctAnswer": "Cancer"
+        },
+        {
+          "category": "Science: Computers",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "CMOS is tech used for constructing integrated circuits. What does CMOS stand for?",
+          "chosenAnswer": "Computer-made operating system",
+          "correctAnswer": "Complementary metal–oxide–semiconductor"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which genre of music is John Coltrane primarily associated with?",
+          "chosenAnswer": "Rock and Roll",
+          "correctAnswer": "Jazz"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "'Don't You Want Me?' was a number one hit in 1981 for which electropop band?",
+          "chosenAnswer": "Depeche Mode",
+          "correctAnswer": "Human League"
+        }
+      ],
+      "timeSeconds": 85,
+      "submittedAt": "2026-08-02T18:09:59.412Z"
+    },
+    "Michaela": {
+      "score": 4,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Vehicles",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "What manufacturer made the car used in Back to the Future?",
+          "chosenAnswer": "DeLorean",
+          "correctAnswer": "DeLorean"
+        },
+        {
+          "category": "Science: Mathematics",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "What is the correct order of operations for solving equations?",
+          "chosenAnswer": "Parentheses, Exponents, Multiplication, Division, Addition, Subtraction",
+          "correctAnswer": "Parentheses, Exponents, Multiplication, Division, Addition, Subtraction"
+        },
+        {
+          "category": "Science & Nature",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "Botanically speaking, which of these fruits is NOT a berry?",
+          "chosenAnswer": "Concord Grape",
+          "correctAnswer": "Strawberry"
+        },
+        {
+          "category": "Entertainment: Japanese Anime & Manga",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "What is the name of the final villain in the manga series \"Bleach\"?",
+          "chosenAnswer": "Juhabach",
+          "correctAnswer": "Yhwach"
+        },
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Who played Batman in the 1997 film \"Batman and Robin\"?",
+          "chosenAnswer": "George Clooney",
+          "correctAnswer": "George Clooney"
+        },
+        {
+          "category": "Entertainment: Television",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "Which of these voices wasn't a choice for the House AI in \"The Simpsons Treehouse of Horror\" short, House of Whacks?",
+          "chosenAnswer": "Pierce Brosnan",
+          "correctAnswer": "George Clooney"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Which sign of the zodiac is represented by the Crab?",
+          "chosenAnswer": "Cancer",
+          "correctAnswer": "Cancer"
+        },
+        {
+          "category": "Science: Computers",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "CMOS is tech used for constructing integrated circuits. What does CMOS stand for?",
+          "chosenAnswer": "Complementary magnetic-ohms-semiconductor",
+          "correctAnswer": "Complementary metal–oxide–semiconductor"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which genre of music is John Coltrane primarily associated with?",
+          "chosenAnswer": "Death Metal",
+          "correctAnswer": "Jazz"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "'Don't You Want Me?' was a number one hit in 1981 for which electropop band?",
+          "chosenAnswer": "Pet Shop Boys",
+          "correctAnswer": "Human League"
+        }
+      ],
+      "timeSeconds": 31,
+      "submittedAt": "2026-08-03T01:10:45.426Z"
+    }
+  },
+  "2026-08-03": {
+    "Nathan": {
+      "score": 7,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Science & Nature",
+          "difficulty": "hard",
+          "correct": true,
+          "question": "What is the scientific name of the knee cap?",
+          "chosenAnswer": "Patella",
+          "correctAnswer": "Patella"
+        },
+        {
+          "category": "History",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "What was Manfred von Richthofen's nickname?",
+          "chosenAnswer": "The Red Baron",
+          "correctAnswer": "The Red Baron"
+        },
+        {
+          "category": "Politics",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "What is the name of Niccolò Machiavelli's work that argued effective leaders needed to crush their opponents at all costs?",
+          "chosenAnswer": "Love's Labours Lost",
+          "correctAnswer": "The Prince"
+        },
+        {
+          "category": "History",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "The ancient city of Chichén Itzá was built by which civilization?",
+          "chosenAnswer": "Aztecs",
+          "correctAnswer": "Mayans"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Who is the vocalist and frontman of rock band \"Guns N' Roses\"?",
+          "chosenAnswer": "Axl Rose",
+          "correctAnswer": "Axl Rose"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Who is the lead singer of Pearl Jam?",
+          "chosenAnswer": "Eddie Vedder",
+          "correctAnswer": "Eddie Vedder"
+        },
+        {
+          "category": "Geography",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "What is Laos?",
+          "chosenAnswer": "Country",
+          "correctAnswer": "Country"
+        },
+        {
+          "category": "History",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "What was the capital of South Vietnam before the Vietnam War?",
+          "chosenAnswer": "Saigon",
+          "correctAnswer": "Saigon"
+        },
+        {
+          "category": "Geography",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Which islands below have been claimed by both Japan and Russia?",
+          "chosenAnswer": "Kuril Islands",
+          "correctAnswer": "Kuril Islands"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "According to the nursery rhyme, what fruit did Little Jack Horner pull out of his Christmas pie?",
+          "chosenAnswer": "Peach",
+          "correctAnswer": "Plum"
+        }
+      ],
+      "timeSeconds": 58,
+      "submittedAt": "2026-08-03T17:42:55.862Z"
+    }
+  },
+  "2026-08-04": {
+    "Tanner": {
+      "score": 3,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Which song previously recorded by Elvis Presley was covered by UB40 with a reggae beat?",
+          "chosenAnswer": "Can't Help Falling in Love",
+          "correctAnswer": "Can't Help Falling in Love"
+        },
+        {
+          "category": "History",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "According to legend, the ancient Greeks constructed a huge wooden model of which animal to gain entrance to Troy?",
+          "chosenAnswer": "Horse",
+          "correctAnswer": "Horse"
+        },
+        {
+          "category": "History",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "When was the SS or Schutzstaffel established?",
+          "chosenAnswer": "February 21st, 1926",
+          "correctAnswer": "April 4th, 1925"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "The band Muse released their first album, Showbiz, in what year?",
+          "chosenAnswer": "1998",
+          "correctAnswer": "1999"
+        },
+        {
+          "category": "Geography",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "Which of these is NOT a real tectonic plate?",
+          "chosenAnswer": "Nazca Plate",
+          "correctAnswer": "Atlantic Plate"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "\"Doctor Jones\", \"Turn Back Time\" and \"Barbie Girl\" were UK number ones for which Eurodance group?",
+          "chosenAnswer": "Sash!",
+          "correctAnswer": "Aqua"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "What is the most frequently used letter in the english alphabet?",
+          "chosenAnswer": "I",
+          "correctAnswer": "E"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "The song \"Old Town Road\" by American rapper Lil Nas X samples the song \"34 Ghosts IV\" by which band?",
+          "chosenAnswer": "Iron Maiden",
+          "correctAnswer": "Nine Inch Nails"
+        },
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Who played Batman in the 1997 film \"Batman and Robin\"?",
+          "chosenAnswer": "George Clooney",
+          "correctAnswer": "George Clooney"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which year was the album \"Year of the Snitch\" by Death Grips released?",
+          "chosenAnswer": "2011",
+          "correctAnswer": "2018"
+        }
+      ],
+      "timeSeconds": 67,
+      "submittedAt": "2026-08-04T16:20:35.132Z"
+    },
+    "Nathan": {
+      "score": 2,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Which song previously recorded by Elvis Presley was covered by UB40 with a reggae beat?",
+          "chosenAnswer": "Jailhouse Rock",
+          "correctAnswer": "Can't Help Falling in Love"
+        },
+        {
+          "category": "History",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "According to legend, the ancient Greeks constructed a huge wooden model of which animal to gain entrance to Troy?",
+          "chosenAnswer": "Horse",
+          "correctAnswer": "Horse"
+        },
+        {
+          "category": "History",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "When was the SS or Schutzstaffel established?",
+          "chosenAnswer": "March 8th, 1935",
+          "correctAnswer": "April 4th, 1925"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "The band Muse released their first album, Showbiz, in what year?",
+          "chosenAnswer": "1998",
+          "correctAnswer": "1999"
+        },
+        {
+          "category": "Geography",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "Which of these is NOT a real tectonic plate?",
+          "chosenAnswer": "Nazca Plate",
+          "correctAnswer": "Atlantic Plate"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "\"Doctor Jones\", \"Turn Back Time\" and \"Barbie Girl\" were UK number ones for which Eurodance group?",
+          "chosenAnswer": "Eiffel 65",
+          "correctAnswer": "Aqua"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "What is the most frequently used letter in the english alphabet?",
+          "chosenAnswer": "A",
+          "correctAnswer": "E"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "The song \"Old Town Road\" by American rapper Lil Nas X samples the song \"34 Ghosts IV\" by which band?",
+          "chosenAnswer": "Animal Collective",
+          "correctAnswer": "Nine Inch Nails"
+        },
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Who played Batman in the 1997 film \"Batman and Robin\"?",
+          "chosenAnswer": "George Clooney",
+          "correctAnswer": "George Clooney"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which year was the album \"Year of the Snitch\" by Death Grips released?",
+          "chosenAnswer": "2017",
+          "correctAnswer": "2018"
+        }
+      ],
+      "timeSeconds": 79,
+      "submittedAt": "2026-08-04T16:38:18.021Z"
+    }
+  },
+  "2026-08-05": {
+    "Thomas": {
+      "score": 4,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Entertainment: Television",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Which of these television shows makes everyone look under their chair?",
+          "chosenAnswer": "Oprah",
+          "correctAnswer": "Oprah"
+        },
+        {
+          "category": "History",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "What did Albert Einstein win the Nobel Prize for in 1921?",
+          "chosenAnswer": "Relativity",
+          "correctAnswer": "Photoelectric Effect"
+        },
+        {
+          "category": "History",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Who was the first president of the United States?",
+          "chosenAnswer": "George Washington",
+          "correctAnswer": "George Washington"
+        },
+        {
+          "category": "History",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "On which day did construction start on \"The Pentagon\", the headquarters for the United States Department of Defense?",
+          "chosenAnswer": "June 15, 1947",
+          "correctAnswer": "September 11, 1941"
+        },
+        {
+          "category": "History",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Who succeded Josef Stalin as the leader of the Soviet Union?",
+          "chosenAnswer": "Georgy Malenkov",
+          "correctAnswer": "Nikita Krushchev"
+        },
+        {
+          "category": "Science & Nature",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Which planet did the \"Viking 1\" spacecraft send surface images of, starting in 1976?",
+          "chosenAnswer": "Jupiter",
+          "correctAnswer": "Mars"
+        },
+        {
+          "category": "Entertainment: Board Games",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "When was the board game Twister, released to the public?",
+          "chosenAnswer": "September 1965",
+          "correctAnswer": "April 1966"
+        },
+        {
+          "category": "History",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "Toussaint Louverture led a successful slave revolt in which country?",
+          "chosenAnswer": "United States",
+          "correctAnswer": "Haiti"
+        },
+        {
+          "category": "Entertainment: Television",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "What was the name of the the first episode of Doctor Who to air in 1963?",
+          "chosenAnswer": "An Unearthly Child",
+          "correctAnswer": "An Unearthly Child"
+        },
+        {
+          "category": "Art",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "What were Marcel Duchamp's readymades?",
+          "chosenAnswer": "utilitarian objects elevated to the status of art",
+          "correctAnswer": "utilitarian objects elevated to the status of art"
+        }
+      ],
+      "timeSeconds": 62,
+      "submittedAt": "2026-08-05T17:23:52.751Z"
+    },
+    "Nathan": {
+      "score": 7,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Entertainment: Television",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Which of these television shows makes everyone look under their chair?",
+          "chosenAnswer": "Oprah",
+          "correctAnswer": "Oprah"
+        },
+        {
+          "category": "History",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "What did Albert Einstein win the Nobel Prize for in 1921?",
+          "chosenAnswer": "Relativity",
+          "correctAnswer": "Photoelectric Effect"
+        },
+        {
+          "category": "History",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Who was the first president of the United States?",
+          "chosenAnswer": "George Washington",
+          "correctAnswer": "George Washington"
+        },
+        {
+          "category": "History",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "On which day did construction start on \"The Pentagon\", the headquarters for the United States Department of Defense?",
+          "chosenAnswer": "September 2, 1962",
+          "correctAnswer": "September 11, 1941"
+        },
+        {
+          "category": "History",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Who succeded Josef Stalin as the leader of the Soviet Union?",
+          "chosenAnswer": "Nikita Krushchev",
+          "correctAnswer": "Nikita Krushchev"
+        },
+        {
+          "category": "Science & Nature",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Which planet did the \"Viking 1\" spacecraft send surface images of, starting in 1976?",
+          "chosenAnswer": "Saturn",
+          "correctAnswer": "Mars"
+        },
+        {
+          "category": "Entertainment: Board Games",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "When was the board game Twister, released to the public?",
+          "chosenAnswer": "April 1966",
+          "correctAnswer": "April 1966"
+        },
+        {
+          "category": "History",
+          "difficulty": "hard",
+          "correct": true,
+          "question": "Toussaint Louverture led a successful slave revolt in which country?",
+          "chosenAnswer": "Haiti",
+          "correctAnswer": "Haiti"
+        },
+        {
+          "category": "Entertainment: Television",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "What was the name of the the first episode of Doctor Who to air in 1963?",
+          "chosenAnswer": "An Unearthly Child",
+          "correctAnswer": "An Unearthly Child"
+        },
+        {
+          "category": "Art",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "What were Marcel Duchamp's readymades?",
+          "chosenAnswer": "utilitarian objects elevated to the status of art",
+          "correctAnswer": "utilitarian objects elevated to the status of art"
+        }
+      ],
+      "timeSeconds": 56,
+      "submittedAt": "2026-08-06T02:46:05.376Z"
+    }
+  },
+  "2026-08-06": {
+    "Thomas": {
+      "score": 3,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which of the following is an album by punk rock band Anti-Flag?",
+          "chosenAnswer": "Infinity On High",
+          "correctAnswer": "For Blood And Empire"
+        },
+        {
+          "category": "Celebrities",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "By what name is Carlos Estevez better known? ",
+          "chosenAnswer": "Bruno Mars",
+          "correctAnswer": "Charlie Sheen"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which music publication is often abbreviated to NME?",
+          "chosenAnswer": "New Metro Entertainment",
+          "correctAnswer": "New Musical Express"
+        },
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Leonardo Di Caprio won his first Best Actor Oscar for his performance in which film?",
+          "chosenAnswer": "The Revenant",
+          "correctAnswer": "The Revenant"
+        },
+        {
+          "category": "Geography",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Which of these countries is NOT located in Africa?",
+          "chosenAnswer": "Burkina Faso",
+          "correctAnswer": "Suriname"
+        },
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Who is the main antagonist of Christopher Nolan's 2012 film \"The Dark Knight Rises\"?",
+          "chosenAnswer": "Bane",
+          "correctAnswer": "Bane"
+        },
+        {
+          "category": "Geography",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Which of these countries is \"doubly landlocked\" (surrounded entirely by one or more landlocked countries)?",
+          "chosenAnswer": "Ethiopia",
+          "correctAnswer": "Uzbekistan"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "What is Cuba's official, most widely spoken language?",
+          "chosenAnswer": "Portuguese",
+          "correctAnswer": "Spanish"
+        },
+        {
+          "category": "Art",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Who painted the painting \"Nighthawks\"?",
+          "chosenAnswer": "Salvador Dali",
+          "correctAnswer": "Edward Hopper"
+        },
+        {
+          "category": "Sports",
+          "difficulty": "hard",
+          "correct": true,
+          "question": "Which is Kenesisa Bekele's personal best at marathon?",
+          "chosenAnswer": "2:01:41",
+          "correctAnswer": "2:01:41"
+        }
+      ],
+      "timeSeconds": 60,
+      "submittedAt": "2026-08-06T16:59:37.183Z"
+    },
+    "Nathan": {
+      "score": 5,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which of the following is an album by punk rock band Anti-Flag?",
+          "chosenAnswer": "No Pads, No Helmets...Just Balls",
+          "correctAnswer": "For Blood And Empire"
+        },
+        {
+          "category": "Celebrities",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "By what name is Carlos Estevez better known? ",
+          "chosenAnswer": "Bruno Mars",
+          "correctAnswer": "Charlie Sheen"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Which music publication is often abbreviated to NME?",
+          "chosenAnswer": "New Musical Express",
+          "correctAnswer": "New Musical Express"
+        },
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Leonardo Di Caprio won his first Best Actor Oscar for his performance in which film?",
+          "chosenAnswer": "The Revenant",
+          "correctAnswer": "The Revenant"
+        },
+        {
+          "category": "Geography",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Which of these countries is NOT located in Africa?",
+          "chosenAnswer": "Suriname",
+          "correctAnswer": "Suriname"
+        },
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Who is the main antagonist of Christopher Nolan's 2012 film \"The Dark Knight Rises\"?",
+          "chosenAnswer": "The Riddler",
+          "correctAnswer": "Bane"
+        },
+        {
+          "category": "Geography",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Which of these countries is \"doubly landlocked\" (surrounded entirely by one or more landlocked countries)?",
+          "chosenAnswer": "Ethiopia",
+          "correctAnswer": "Uzbekistan"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "What is Cuba's official, most widely spoken language?",
+          "chosenAnswer": "Spanish",
+          "correctAnswer": "Spanish"
+        },
+        {
+          "category": "Art",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Who painted the painting \"Nighthawks\"?",
+          "chosenAnswer": "Edward Hopper",
+          "correctAnswer": "Edward Hopper"
+        },
+        {
+          "category": "Sports",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "Which is Kenesisa Bekele's personal best at marathon?",
+          "chosenAnswer": "2:01:12",
+          "correctAnswer": "2:01:41"
+        }
+      ],
+      "timeSeconds": 97,
+      "submittedAt": "2026-08-06T19:18:52.345Z"
+    }
+  },
+  "2026-08-07": {
+    "Nathan": {
+      "score": 4,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "The film Mad Max: Fury Road features the Dies Irae  from which composer's requiem?",
+          "chosenAnswer": "Berlioz",
+          "correctAnswer": "Verdi"
+        },
+        {
+          "category": "Entertainment: Books",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which of the following is the world's best-selling book?",
+          "chosenAnswer": "Harry Potter and the Philosopher's Stone",
+          "correctAnswer": "The Lord of the Rings"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "From which country does the piano originate?",
+          "chosenAnswer": "Austria",
+          "correctAnswer": "Italy"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "How many furlongs are there in a mile?",
+          "chosenAnswer": "Four",
+          "correctAnswer": "Eight"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Which brass instrument has the lowest pitch in an orchestra?",
+          "chosenAnswer": "Tuba",
+          "correctAnswer": "Tuba"
+        },
+        {
+          "category": "History",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Which of these countries was sea charted in 1500 by the Portuguese maritime explorations?",
+          "chosenAnswer": "Madagascar",
+          "correctAnswer": "Brazil"
+        },
+        {
+          "category": "History",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Which famous world leader is famed for the saying, \"Let them eat cake\", yet is rumored that he/she never said it at all?",
+          "chosenAnswer": "Marie Antoinette",
+          "correctAnswer": "Marie Antoinette"
+        },
+        {
+          "category": "Sports",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Which wrestler won the 2019 Men’s Royal Rumble?",
+          "chosenAnswer": "Seth Rollins",
+          "correctAnswer": "Seth Rollins"
+        },
+        {
+          "category": "Science & Nature",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "What is the scientific name for the extinct hominin known as \"Lucy\"?",
+          "chosenAnswer": "Australopithecus Africanus",
+          "correctAnswer": "Australopithecus Afarensis"
+        },
+        {
+          "category": "Sports",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Which of these jersey numbers has Shaquille O'Neal never worn?",
+          "chosenAnswer": "35",
+          "correctAnswer": "35"
+        }
+      ],
+      "timeSeconds": 92,
+      "submittedAt": "2026-08-07T16:57:27.292Z"
+    }
+  },
+  "2026-08-08": {
+    "Nathan": {
+      "score": 4,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Celebrities",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Which of these people is NOT a part of the Internet comedy group Mega64?",
+          "chosenAnswer": "Shawn Chatfield",
+          "correctAnswer": "Jon Jafari"
+        },
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "In Youtuber Jerma985's 2014 film \"Rat Movie: Mystery of the Mayan Treasure,\" who is the man who tries to steal the Mayan Treasure?",
+          "chosenAnswer": "Demon Lord Zeraxos",
+          "correctAnswer": "Dick Dastardly Richards"
+        },
+        {
+          "category": "Geography",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Which US state has the highest population?",
+          "chosenAnswer": "California",
+          "correctAnswer": "California"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "How many studio albums have the heavy metal band, 'Metallica' released in the period between 1983 and 2016?",
+          "chosenAnswer": "12",
+          "correctAnswer": "10"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "The New York Times slogan is, “All the News That’s Fit to…”",
+          "chosenAnswer": "Digest",
+          "correctAnswer": "Print"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "If you are caught \"Goldbricking\", what are you doing wrong?",
+          "chosenAnswer": "Stealing",
+          "correctAnswer": "Slacking"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Which of these colours is NOT featured in the logo for Google?",
+          "chosenAnswer": "Pink",
+          "correctAnswer": "Pink"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "What is the nickname of the US state of California?",
+          "chosenAnswer": "Golden State",
+          "correctAnswer": "Golden State"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Liam Howlett founded which electronic music group in 1990?",
+          "chosenAnswer": "The Crystal Method",
+          "correctAnswer": "The Prodigy"
+        },
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "What name did Tom Hanks give to his volleyball companion in the film `Cast Away`?",
+          "chosenAnswer": "Wilson",
+          "correctAnswer": "Wilson"
+        }
+      ],
+      "timeSeconds": 67,
+      "submittedAt": "2026-08-08T14:59:44.581Z"
+    }
+  },
+  "2026-08-09": {
+    "Nathan": {
+      "score": 5,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Sports",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Which football manager won more trophies than any other during his tenure at English football club Manchester United?",
+          "chosenAnswer": "Sir Alex Ferguson",
+          "correctAnswer": "Sir Alex Ferguson"
+        },
+        {
+          "category": "Entertainment: Television",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "British actor David Morrissey stars as which role in \"The Walking Dead\"?",
+          "chosenAnswer": "Rick Grimes",
+          "correctAnswer": "The Governor"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "On which Beatles album would you find the song 'Eleanor Rigby'?",
+          "chosenAnswer": "Abbey Road",
+          "correctAnswer": "Revolver"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "What is the name of the Jewish New Year?",
+          "chosenAnswer": "Rosh Hashanah",
+          "correctAnswer": "Rosh Hashanah"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "hard",
+          "correct": true,
+          "question": "How many calories are in a 355 ml can of Pepsi Cola?",
+          "chosenAnswer": "150",
+          "correctAnswer": "150"
+        },
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "In Back to the Future Part II, Marty and Dr. Emmett Brown go to which future date?",
+          "chosenAnswer": "January 25, 2015",
+          "correctAnswer": "October 21, 2015"
+        },
+        {
+          "category": "History",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "Bohdan Khmelnytsky was which of the following?",
+          "chosenAnswer": "General Secretary of the Communist Party of the USSR",
+          "correctAnswer": "Leader of the Ukrainian Cossacks"
+        },
+        {
+          "category": "History",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Who crowned Charlemagne as Holy Roman Emperor on Christmas Day in 800?",
+          "chosenAnswer": "Pope Valentine",
+          "correctAnswer": "Pope Leo III"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "What musician made the song \"F**kin` Perfect\" in 2010?",
+          "chosenAnswer": "P!nk",
+          "correctAnswer": "P!nk"
+        },
+        {
+          "category": "Entertainment: Television",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Which of these characters in \"Stranger Things\" has the power of Telekinesis?",
+          "chosenAnswer": "Eleven",
+          "correctAnswer": "Eleven"
+        }
+      ],
+      "timeSeconds": 74,
+      "submittedAt": "2026-08-09T15:08:19.236Z"
+    },
+    "Jake": {
+      "score": 5,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Sports",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Which football manager won more trophies than any other during his tenure at English football club Manchester United?",
+          "chosenAnswer": "Sir Alex Ferguson",
+          "correctAnswer": "Sir Alex Ferguson"
+        },
+        {
+          "category": "Entertainment: Television",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "British actor David Morrissey stars as which role in \"The Walking Dead\"?",
+          "chosenAnswer": "Negan",
+          "correctAnswer": "The Governor"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "On which Beatles album would you find the song 'Eleanor Rigby'?",
+          "chosenAnswer": "Abbey Road",
+          "correctAnswer": "Revolver"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "What is the name of the Jewish New Year?",
+          "chosenAnswer": "Rosh Hashanah",
+          "correctAnswer": "Rosh Hashanah"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "How many calories are in a 355 ml can of Pepsi Cola?",
+          "chosenAnswer": "200",
+          "correctAnswer": "150"
+        },
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "In Back to the Future Part II, Marty and Dr. Emmett Brown go to which future date?",
+          "chosenAnswer": "August 28, 2015",
+          "correctAnswer": "October 21, 2015"
+        },
+        {
+          "category": "History",
+          "difficulty": "hard",
+          "correct": true,
+          "question": "Bohdan Khmelnytsky was which of the following?",
+          "chosenAnswer": "Leader of the Ukrainian Cossacks",
+          "correctAnswer": "Leader of the Ukrainian Cossacks"
+        },
+        {
+          "category": "History",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Who crowned Charlemagne as Holy Roman Emperor on Christmas Day in 800?",
+          "chosenAnswer": "Pope Valentine",
+          "correctAnswer": "Pope Leo III"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "What musician made the song \"F**kin` Perfect\" in 2010?",
+          "chosenAnswer": "P!nk",
+          "correctAnswer": "P!nk"
+        },
+        {
+          "category": "Entertainment: Television",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Which of these characters in \"Stranger Things\" has the power of Telekinesis?",
+          "chosenAnswer": "Eleven",
+          "correctAnswer": "Eleven"
+        }
+      ],
+      "timeSeconds": 73,
+      "submittedAt": "2026-08-09T22:11:03.596Z"
+    },
+    "Thomas": {
+      "score": 5,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Sports",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Which football manager won more trophies than any other during his tenure at English football club Manchester United?",
+          "chosenAnswer": "José Mourinho",
+          "correctAnswer": "Sir Alex Ferguson"
+        },
+        {
+          "category": "Entertainment: Television",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "British actor David Morrissey stars as which role in \"The Walking Dead\"?",
+          "chosenAnswer": "Daryl Dixon",
+          "correctAnswer": "The Governor"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "hard",
+          "correct": true,
+          "question": "On which Beatles album would you find the song 'Eleanor Rigby'?",
+          "chosenAnswer": "Revolver",
+          "correctAnswer": "Revolver"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "What is the name of the Jewish New Year?",
+          "chosenAnswer": "Rosh Hashanah",
+          "correctAnswer": "Rosh Hashanah"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "How many calories are in a 355 ml can of Pepsi Cola?",
+          "chosenAnswer": "155",
+          "correctAnswer": "150"
+        },
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "In Back to the Future Part II, Marty and Dr. Emmett Brown go to which future date?",
+          "chosenAnswer": "January 25, 2015",
+          "correctAnswer": "October 21, 2015"
+        },
+        {
+          "category": "History",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "Bohdan Khmelnytsky was which of the following?",
+          "chosenAnswer": "Grand Prince of Novgorod",
+          "correctAnswer": "Leader of the Ukrainian Cossacks"
+        },
+        {
+          "category": "History",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Who crowned Charlemagne as Holy Roman Emperor on Christmas Day in 800?",
+          "chosenAnswer": "Pope Leo III",
+          "correctAnswer": "Pope Leo III"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "What musician made the song \"F**kin` Perfect\" in 2010?",
+          "chosenAnswer": "P!nk",
+          "correctAnswer": "P!nk"
+        },
+        {
+          "category": "Entertainment: Television",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Which of these characters in \"Stranger Things\" has the power of Telekinesis?",
+          "chosenAnswer": "Eleven",
+          "correctAnswer": "Eleven"
+        }
+      ],
+      "timeSeconds": 63,
+      "submittedAt": "2026-08-09T22:45:02.070Z"
+    }
+  },
+  "2026-08-10": {
+    "Nathan": {
+      "score": 6,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Art",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Which Van Gogh painting depicts the view from his asylum in Saint-Rémy-de-Provence in southern France?",
+          "chosenAnswer": "The Starry Night",
+          "correctAnswer": "The Starry Night"
+        },
+        {
+          "category": "Entertainment: Books",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "\"Green Eggs And Ham\" is a book by which author?",
+          "chosenAnswer": "Dr. Seuss",
+          "correctAnswer": "Dr. Seuss"
+        },
+        {
+          "category": "Animals",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "How many teeth does an adult rabbit have?",
+          "chosenAnswer": "28",
+          "correctAnswer": "28"
+        },
+        {
+          "category": "Politics",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Whose 2016 presidential campaign slogan was \"Make America Great Again\"?",
+          "chosenAnswer": "Donald Trump",
+          "correctAnswer": "Donald Trump"
+        },
+        {
+          "category": "Geography",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Lake Titicaca is located between which two nations?",
+          "chosenAnswer": "Kenya and Uganda",
+          "correctAnswer": "Peru and Bolivia"
+        },
+        {
+          "category": "History",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "Who was the President of the United States during the signing of the Gadsden Purchase?",
+          "chosenAnswer": "James Polk",
+          "correctAnswer": "Franklin Pierce"
+        },
+        {
+          "category": "Science: Mathematics",
+          "difficulty": "hard",
+          "correct": true,
+          "question": "The French mathematician Évariste Galois is primarily known for his work in which?",
+          "chosenAnswer": "Galois Theory",
+          "correctAnswer": "Galois Theory"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "What was the best selling album of 2015?",
+          "chosenAnswer": "Taylor Swift, 1989",
+          "correctAnswer": "Adele, 25"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Which of these is the name of a Japanese system of alternative medicine, literally meaning \"finger pressure\"?",
+          "chosenAnswer": "Shiatsu",
+          "correctAnswer": "Shiatsu"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "What organ of the body produces bile?",
+          "chosenAnswer": "Gallbladder",
+          "correctAnswer": "Liver"
+        }
+      ],
+      "timeSeconds": 65,
+      "submittedAt": "2026-08-10T13:52:20.244Z"
+    },
+    "Thomas": {
+      "score": 3,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Art",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which Van Gogh painting depicts the view from his asylum in Saint-Rémy-de-Provence in southern France?",
+          "chosenAnswer": "The Church at Auvers",
+          "correctAnswer": "The Starry Night"
+        },
+        {
+          "category": "Entertainment: Books",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "\"Green Eggs And Ham\" is a book by which author?",
+          "chosenAnswer": "Dr. Seuss",
+          "correctAnswer": "Dr. Seuss"
+        },
+        {
+          "category": "Animals",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "How many teeth does an adult rabbit have?",
+          "chosenAnswer": "26",
+          "correctAnswer": "28"
+        },
+        {
+          "category": "Politics",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Whose 2016 presidential campaign slogan was \"Make America Great Again\"?",
+          "chosenAnswer": "Donald Trump",
+          "correctAnswer": "Donald Trump"
+        },
+        {
+          "category": "Geography",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Lake Titicaca is located between which two nations?",
+          "chosenAnswer": "Kenya and Uganda",
+          "correctAnswer": "Peru and Bolivia"
+        },
+        {
+          "category": "History",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "Who was the President of the United States during the signing of the Gadsden Purchase?",
+          "chosenAnswer": "Andrew Johnson",
+          "correctAnswer": "Franklin Pierce"
+        },
+        {
+          "category": "Science: Mathematics",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "The French mathematician Évariste Galois is primarily known for his work in which?",
+          "chosenAnswer": "Galois' Method for PDE's ",
+          "correctAnswer": "Galois Theory"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "What was the best selling album of 2015?",
+          "chosenAnswer": "Adele, 25",
+          "correctAnswer": "Adele, 25"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Which of these is the name of a Japanese system of alternative medicine, literally meaning \"finger pressure\"?",
+          "chosenAnswer": "Ukiyo",
+          "correctAnswer": "Shiatsu"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "What organ of the body produces bile?",
+          "chosenAnswer": "Pancreas",
+          "correctAnswer": "Liver"
+        }
+      ],
+      "timeSeconds": 65,
+      "submittedAt": "2026-08-11T03:59:03.814Z"
+    }
+  },
+  "2026-08-11": {
+    "Nathan": {
+      "score": 6,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Science: Computers",
+          "difficulty": "hard",
+          "correct": true,
+          "question": "Who is the original author of the realtime physics engine called PhysX?",
+          "chosenAnswer": "NovodeX",
+          "correctAnswer": "NovodeX"
+        },
+        {
+          "category": "History",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "When did O, Canada officially become the national anthem?",
+          "chosenAnswer": "1880",
+          "correctAnswer": "1980"
+        },
+        {
+          "category": "Vehicles",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "How many wheels does a unicycle have?",
+          "chosenAnswer": "1",
+          "correctAnswer": "1"
+        },
+        {
+          "category": "Entertainment: Books",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Of the following, which Stephen King novel was published earliest?",
+          "chosenAnswer": "\"Cujo\"",
+          "correctAnswer": "\"Cujo\""
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which band recorded the album \"Parallel Lines\"?",
+          "chosenAnswer": "Paramore",
+          "correctAnswer": "Blondie"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Which is the capital of Spain?",
+          "chosenAnswer": "Madrid",
+          "correctAnswer": "Madrid"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "What is the name of Metallica's debut album, released in 1983?",
+          "chosenAnswer": "Master of Puppets",
+          "correctAnswer": "Kill 'Em All"
+        },
+        {
+          "category": "Science: Computers",
+          "difficulty": "hard",
+          "correct": true,
+          "question": "What type of sound chip does the Super Nintendo Entertainment System (SNES) have?",
+          "chosenAnswer": "ADPCM Sampler",
+          "correctAnswer": "ADPCM Sampler"
+        },
+        {
+          "category": "Vehicles",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "What are the cylinder-like parts that pump up and down within the engine?",
+          "chosenAnswer": "Pistons",
+          "correctAnswer": "Pistons"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which of the following songs was not originally released by Sir Elton John? ",
+          "chosenAnswer": "Candle in the Wind",
+          "correctAnswer": "You'll Be In My Heart"
+        }
+      ],
+      "timeSeconds": 69,
+      "submittedAt": "2026-08-11T14:28:09.377Z"
+    },
+    "Thomas": {
+      "score": 4,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Science: Computers",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "Who is the original author of the realtime physics engine called PhysX?",
+          "chosenAnswer": "Ageia",
+          "correctAnswer": "NovodeX"
+        },
+        {
+          "category": "History",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "When did O, Canada officially become the national anthem?",
+          "chosenAnswer": "1880",
+          "correctAnswer": "1980"
+        },
+        {
+          "category": "Vehicles",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "How many wheels does a unicycle have?",
+          "chosenAnswer": "1",
+          "correctAnswer": "1"
+        },
+        {
+          "category": "Entertainment: Books",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Of the following, which Stephen King novel was published earliest?",
+          "chosenAnswer": "\"Cujo\"",
+          "correctAnswer": "\"Cujo\""
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which band recorded the album \"Parallel Lines\"?",
+          "chosenAnswer": "Coldplay",
+          "correctAnswer": "Blondie"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which is the capital of Spain?",
+          "chosenAnswer": "Barcelona",
+          "correctAnswer": "Madrid"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "What is the name of Metallica's debut album, released in 1983?",
+          "chosenAnswer": "Master of Puppets",
+          "correctAnswer": "Kill 'Em All"
+        },
+        {
+          "category": "Science: Computers",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "What type of sound chip does the Super Nintendo Entertainment System (SNES) have?",
+          "chosenAnswer": "FM Synthesizer",
+          "correctAnswer": "ADPCM Sampler"
+        },
+        {
+          "category": "Vehicles",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "What are the cylinder-like parts that pump up and down within the engine?",
+          "chosenAnswer": "Pistons",
+          "correctAnswer": "Pistons"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Which of the following songs was not originally released by Sir Elton John? ",
+          "chosenAnswer": "You'll Be In My Heart",
+          "correctAnswer": "You'll Be In My Heart"
+        }
+      ],
+      "timeSeconds": 40,
+      "submittedAt": "2026-08-11T18:38:11.303Z"
+    },
+    "Jake": {
+      "score": 4,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Science: Computers",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "Who is the original author of the realtime physics engine called PhysX?",
+          "chosenAnswer": "Nvidia",
+          "correctAnswer": "NovodeX"
+        },
+        {
+          "category": "History",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "When did O, Canada officially become the national anthem?",
+          "chosenAnswer": "1980",
+          "correctAnswer": "1980"
+        },
+        {
+          "category": "Vehicles",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "How many wheels does a unicycle have?",
+          "chosenAnswer": "1",
+          "correctAnswer": "1"
+        },
+        {
+          "category": "Entertainment: Books",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Of the following, which Stephen King novel was published earliest?",
+          "chosenAnswer": "\"Christine\"",
+          "correctAnswer": "\"Cujo\""
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which band recorded the album \"Parallel Lines\"?",
+          "chosenAnswer": "Coldplay",
+          "correctAnswer": "Blondie"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Which is the capital of Spain?",
+          "chosenAnswer": "Madrid",
+          "correctAnswer": "Madrid"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "What is the name of Metallica's debut album, released in 1983?",
+          "chosenAnswer": "Countdown to Extinction",
+          "correctAnswer": "Kill 'Em All"
+        },
+        {
+          "category": "Science: Computers",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "What type of sound chip does the Super Nintendo Entertainment System (SNES) have?",
+          "chosenAnswer": "Programmable Sound Generator (PSG)",
+          "correctAnswer": "ADPCM Sampler"
+        },
+        {
+          "category": "Vehicles",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "What are the cylinder-like parts that pump up and down within the engine?",
+          "chosenAnswer": "Pistons",
+          "correctAnswer": "Pistons"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which of the following songs was not originally released by Sir Elton John? ",
+          "chosenAnswer": "Candle in the Wind",
+          "correctAnswer": "You'll Be In My Heart"
+        }
+      ],
+      "timeSeconds": 65,
+      "submittedAt": "2026-08-11T19:16:58.659Z"
+    }
+  },
+  "2026-08-12": {
+    "Nathan": {
+      "score": 4,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Science: Computers",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "What was the name of the first Bulgarian personal computer?",
+          "chosenAnswer": "Pravetz 82",
+          "correctAnswer": "IMKO-1"
+        },
+        {
+          "category": "Science & Nature",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Which of these elements on the Periodic Table is a Noble Gas?",
+          "chosenAnswer": "Neon",
+          "correctAnswer": "Neon"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "What country has had prime ministers named Eden, Major, Peel, Law, Brown and Heath?",
+          "chosenAnswer": "Australia",
+          "correctAnswer": "United Kingdom"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Which group performs the song \"Crash into Me\"?",
+          "chosenAnswer": "Dave Matthews Band",
+          "correctAnswer": "Dave Matthews Band"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Who was the guitarist in the band \"The Doors\"?",
+          "chosenAnswer": "Robby Krieger",
+          "correctAnswer": "Robby Krieger"
+        },
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "What film did James Cameron's Avatar dethrone as the highest-grossing film ever?",
+          "chosenAnswer": "Titanic",
+          "correctAnswer": "Titanic"
+        },
+        {
+          "category": "History",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Which of the following is not in the Indo-European language family?",
+          "chosenAnswer": "Hindi",
+          "correctAnswer": "Finnish"
+        },
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which film has been critically regarded as the best film of all time?",
+          "chosenAnswer": "The Godfather Part II",
+          "correctAnswer": "Citizen Kane"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which song is NOT by singer Tom Jones?",
+          "chosenAnswer": "Delilah",
+          "correctAnswer": "Never Gonna Give You Up"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Which of these Nicktoons were NOT originally a short on Oh Yeah! Cartoons before becoming their own series?",
+          "chosenAnswer": "My Life as a Teenage Robot",
+          "correctAnswer": "Danny Phantom"
+        }
+      ],
+      "timeSeconds": 90,
+      "submittedAt": "2026-08-12T14:11:34.338Z"
+    },
+    "Michaela": {
+      "score": 5,
+      "total": 10,
+      "answers": [
+        {
+          "category": "Science: Computers",
+          "difficulty": "hard",
+          "correct": false,
+          "question": "What was the name of the first Bulgarian personal computer?",
+          "chosenAnswer": "Pravetz 8D",
+          "correctAnswer": "IMKO-1"
+        },
+        {
+          "category": "Science & Nature",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Which of these elements on the Periodic Table is a Noble Gas?",
+          "chosenAnswer": "Neon",
+          "correctAnswer": "Neon"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "What country has had prime ministers named Eden, Major, Peel, Law, Brown and Heath?",
+          "chosenAnswer": "Australia",
+          "correctAnswer": "United Kingdom"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": false,
+          "question": "Which group performs the song \"Crash into Me\"?",
+          "chosenAnswer": "Phish",
+          "correctAnswer": "Dave Matthews Band"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "Who was the guitarist in the band \"The Doors\"?",
+          "chosenAnswer": "Robby Krieger",
+          "correctAnswer": "Robby Krieger"
+        },
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "medium",
+          "correct": true,
+          "question": "What film did James Cameron's Avatar dethrone as the highest-grossing film ever?",
+          "chosenAnswer": "Titanic",
+          "correctAnswer": "Titanic"
+        },
+        {
+          "category": "History",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Which of the following is not in the Indo-European language family?",
+          "chosenAnswer": "English",
+          "correctAnswer": "Finnish"
+        },
+        {
+          "category": "Entertainment: Film",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Which film has been critically regarded as the best film of all time?",
+          "chosenAnswer": "Citizen Kane",
+          "correctAnswer": "Citizen Kane"
+        },
+        {
+          "category": "Entertainment: Music",
+          "difficulty": "easy",
+          "correct": true,
+          "question": "Which song is NOT by singer Tom Jones?",
+          "chosenAnswer": "Never Gonna Give You Up",
+          "correctAnswer": "Never Gonna Give You Up"
+        },
+        {
+          "category": "General Knowledge",
+          "difficulty": "medium",
+          "correct": false,
+          "question": "Which of these Nicktoons were NOT originally a short on Oh Yeah! Cartoons before becoming their own series?",
+          "chosenAnswer": "The Fairly OddParents",
+          "correctAnswer": "Danny Phantom"
+        }
+      ],
+      "timeSeconds": 86,
+      "submittedAt": "2026-08-13T02:10:30.493Z"
+    }
+  }
+}
